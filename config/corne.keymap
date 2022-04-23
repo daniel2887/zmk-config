@@ -18,79 +18,79 @@
 #define G_NUM 7   // Numbers (1-5) accessible from the GAME layer
 
 / {
-        keymap {
-                compatible = "zmk,keymap";
+	keymap {
+		compatible = "zmk,keymap";
 
-                default_layer {
-				bindings = <
-   &kp TAB   &kp Q       &kp W &kp E        &kp R              &kp T     /*|*/ &kp Y     &kp U       &kp I     &kp O   &kp P    &kp BSPC
-   &none     &kp A       &kp S &lt SYMB D   &lt NAV F          &kp G     /*|*/ &kp H     &kp J       &kp K     &kp L   &kp SEMI &kp SQT
-   &kp LSHFT &lt MEDIA Z &kp X &kp C        &kp V              &kp B     /*|*/ &kp N     &kp M       &kp COMMA &kp DOT &kp FSLH &kp RET
-                               &kp LGUI     &mt LALT K_CMENU   &kp LCTRL /*|*/ &kp SPACE &lt NAV RET &mo FN
-				>;
-                };
+		default_layer {
+			bindings = <
+&kp TAB   &kp Q       &kp W &kp E        &kp R              &kp T     /*|*/ &kp Y     &kp U       &kp I     &kp O   &kp P    &kp BSPC
+&none     &kp A       &kp S &lt SYMB D   &lt NAV F          &kp G     /*|*/ &kp H     &kp J       &kp K     &kp L   &kp SEMI &kp SQT
+&kp LSHFT &lt MEDIA Z &kp X &kp C        &kp V              &kp B     /*|*/ &kp N     &kp M       &kp COMMA &kp DOT &kp FSLH &kp RET
+					   &kp LGUI     &mt LALT K_CMENU   &kp LCTRL /*|*/ &kp SPACE &lt NAV RET &mo FN
+			>;
+		};
 
-                gaming_layer {
-				bindings = <
-   &kp TAB          &kp Q       &kp W &kp E     &kp R          &kp T     /*|*/ &kp Y     &kp U       &kp I     &kp O   &kp P    &kp BSPC
-   &lt MEDIA LGUI   &kp A       &kp S &kp D     &kp F          &kp G     /*|*/ &kp H     &kp J       &kp K     &kp L   &kp SEMI &kp SQT
-   &kp LSHFT        &lt MEDIA Z &kp X &kp C     &kp V          &kp B     /*|*/ &kp N     &kp M       &kp COMMA &kp DOT &kp FSLH &kp RET
-                                      &kp LCTRL &lt G_NUM LALT &kp SPACE /*|*/ &kp SPACE &lt NAV RET &mo FN
-				>;
-                };
+		gaming_layer {
+			bindings = <
+&kp TAB          &kp Q       &kp W &kp E     &kp R          &kp T     /*|*/ &kp Y     &kp U       &kp I     &kp O   &kp P    &kp BSPC
+&lt MEDIA LGUI   &kp A       &kp S &kp D     &kp F          &kp G     /*|*/ &kp H     &kp J       &kp K     &kp L   &kp SEMI &kp SQT
+&kp LSHFT        &lt MEDIA Z &kp X &kp C     &kp V          &kp B     /*|*/ &kp N     &kp M       &kp COMMA &kp DOT &kp FSLH &kp RET
+							  &kp LCTRL &lt G_NUM LALT &kp SPACE /*|*/ &kp SPACE &lt NAV RET &mo FN
+			>;
+		};
 
-                navigation_layer {
-				bindings = <
-   &none     &kp ESC &none &kp LC(LA(UP)) &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP     &kp END   &kp DEL &kp BSPC
-   &none     &none   &none &trans         &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN   &kp RIGHT &none   &none
-   &kp LSHFT &none   &none &none          &none    &none             /*|*/ &none     &none    &kp COMMA  &kp DOT   &none   &none
-                           &kp LGUI      &kp LALT &kp LCTRL          /*|*/ &kp BSPC  &kp DEL  &none
-				>;
-                };
+		navigation_layer {
+			bindings = <
+&none     &kp ESC &none &kp LC(LA(UP)) &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP     &kp END   &kp DEL &kp BSPC
+&none     &none   &none &trans         &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN   &kp RIGHT &none   &none
+&kp LSHFT &none   &none &none          &none    &none             /*|*/ &none     &none    &kp COMMA  &kp DOT   &none   &none
+				   &kp LGUI      &kp LALT &kp LCTRL          /*|*/ &kp BSPC  &kp DEL  &none
+			>;
+		};
 
-                symbols_layer {
-				bindings = <
-   &none     &none &none &none    &none  &none       /*|*/ &kp GRAVE &kp LBKT    &kp EXCL  &kp RBKT    &kp STAR &none
-   &none     &none &none &none    &trans &none       /*|*/ &kp AMPS  &kp KP_LPAR &kp MINUS &kp KP_RPAR &kp DLLR &kp CARET
-   &kp LSHFT &none &none &none    &none  &none       /*|*/ &kp PRCNT &kp AT      &kp EQUAL &kp HASH    &kp BSLH &none
-                         &kp LGUI &kp LALT &kp LCTRL /*|*/ &none     &none       &none
-				>;
-                };
+		symbols_layer {
+			bindings = <
+&none     &none &none &none    &none  &none       /*|*/ &kp GRAVE &kp LBKT    &kp EXCL  &kp RBKT    &kp STAR &none
+&none     &none &none &none    &trans &none       /*|*/ &kp AMPS  &kp KP_LPAR &kp MINUS &kp KP_RPAR &kp DLLR &kp CARET
+&kp LSHFT &none &none &none    &none  &none       /*|*/ &kp PRCNT &kp AT      &kp EQUAL &kp HASH    &kp BSLH &none
+				 &kp LGUI &kp LALT &kp LCTRL /*|*/ &none     &none       &none
+			>;
+		};
 
-                numbers_layer {
-				bindings = <
-   &none     &none &none &none    &none    &none     /*|*/ &none   &kp N7 &kp N8 &kp N9 &none   &none
-   &none     &none &none &none    &none    &none     /*|*/ &none   &kp N4 &kp N5 &kp N6 &none   &kp CARET
-   &kp LSHFT &none &none &none    &none    &none     /*|*/ &kp DOT &kp N1 &kp N2 &kp N3 &kp DOT &none
-                         &kp LGUI &kp LALT &kp LCTRL /*|*/ &kp N0  &none  &none
-				>;
-                };
+		numbers_layer {
+			bindings = <
+&none     &none &none &none    &none    &none     /*|*/ &none   &kp N7 &kp N8 &kp N9 &none   &none
+&none     &none &none &none    &none    &none     /*|*/ &none   &kp N4 &kp N5 &kp N6 &none   &kp CARET
+&kp LSHFT &none &none &none    &none    &none     /*|*/ &kp DOT &kp N1 &kp N2 &kp N3 &kp DOT &none
+				 &kp LGUI &kp LALT &kp LCTRL /*|*/ &kp N0  &none  &none
+			>;
+		};
 
-                media_layer {
-				bindings = <
-   &kp PSCRN &none &kp C_PREV &kp C_PP &kp C_NEXT &kp C_VOL_UP /*|*/ &none   &kp N7 &kp N8 &kp N9 &none   &none
-   &none     &none &none      &none    &none      &kp C_MUTE   /*|*/ &none   &kp N4 &kp N5 &kp N6 &none   &kp CARET
-   &kp LSHFT &none &none      &none    &none      &kp C_VOL_DN /*|*/ &kp DOT &kp N1 &kp N2 &kp N3 &kp DOT &none
-                              &none    &none      &kp LCTRL    /*|*/ &kp N0  &none       &none
-				>;
-                };
+		media_layer {
+			bindings = <
+&kp PSCRN &none &kp C_PREV &kp C_PP &kp C_NEXT &kp C_VOL_UP /*|*/ &none   &kp N7 &kp N8 &kp N9 &none   &none
+&none     &none &none      &none    &none      &kp C_MUTE   /*|*/ &none   &kp N4 &kp N5 &kp N6 &none   &kp CARET
+&kp LSHFT &none &none      &none    &none      &kp C_VOL_DN /*|*/ &kp DOT &kp N1 &kp N2 &kp N3 &kp DOT &none
+					  &none    &none      &kp LCTRL    /*|*/ &kp N0  &none       &none
+			>;
+		};
 
-                function_layer {
-				bindings = <
-   &kp PSCRN &none &none &none    &none    &none     /*|*/ &none   &kp F7 &kp F8    &kp F9 &none &kp C_SLEEP
-   &none     &none &none &none    &none    &none     /*|*/ &kp F12 &kp F4 &kp F5    &kp F6 &none &none
-   &kp LSHFT &none &none &none    &none    &none     /*|*/ &kp F11 &kp F1 &kp F2    &kp F3 &none &none
-                         &kp LGUI &kp LALT &kp LCTRL /*|*/ &kp F10 &none  &tog GAME
-				>;
-                };
+		function_layer {
+			bindings = <
+&kp PSCRN &none &none &none    &none    &none     /*|*/ &none   &kp F7 &kp F8    &kp F9 &none &kp C_SLEEP
+&none     &none &none &none    &none    &none     /*|*/ &kp F12 &kp F4 &kp F5    &kp F6 &none &none
+&kp LSHFT &none &none &none    &none    &none     /*|*/ &kp F11 &kp F1 &kp F2    &kp F3 &none &none
+				 &kp LGUI &kp LALT &kp LCTRL /*|*/ &kp F10 &none  &tog GAME
+			>;
+		};
 
-                game_number_layer {
-				bindings = <
-   &kp ESC &kp N1 &none &kp N2 &kp N3 &none /*|*/ &none &none &none &none &none &none
-   &none   &none  &none &none  &kp N4 &none /*|*/ &none &none &none &none &none &none
-   &none   &none  &none &none  &kp N5 &none /*|*/ &none &none &none &none &none &none
-                        &none  &none  &none /*|*/ &none &none &tog GAME
-				>;
-                };
-        };
+		game_number_layer {
+			bindings = <
+&kp ESC &kp N1 &none &kp N2 &kp N3 &none /*|*/ &none &none &none &none &none &none
+&none   &none  &none &none  &kp N4 &none /*|*/ &none &none &none &none &none &none
+&none   &none  &none &none  &kp N5 &none /*|*/ &none &none &none &none &none &none
+				&none  &none  &none /*|*/ &none &none &tog GAME
+			>;
+		};
+	};
 };
