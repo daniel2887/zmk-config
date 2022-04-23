@@ -18,9 +18,16 @@
 #define G_NUM 7   // Numbers (1-5) accessible from the GAME layer
 
 / {
+	conditional_layers {
+		compatible = "zmk,conditional-layers";
+		tri_layer {
+			if-layers = <NAV SYMB>;
+			then-layer = <NUM>;
+		};
+	};
+
 	keymap {
 		compatible = "zmk,keymap";
-
 		default_layer {
 			bindings = <
 &kp TAB   &kp Q       &kp W &kp E        &kp R              &kp T     /*|*/ &kp Y     &kp U       &kp I     &kp O   &kp P    &kp BSPC
