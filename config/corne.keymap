@@ -37,7 +37,7 @@
             label = "MEDIA_LAYER_TAP_PREFERRED";
             #binding-cells = <2>;
 			flavor = "tap-preferred";
-			tapping-term-ms = <400>;
+			tapping-term-ms = <300>;
             bindings = <&mo>, <&kp>;
         };
 
