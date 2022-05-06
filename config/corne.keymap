@@ -16,7 +16,8 @@
 #define NUM 4
 #define MEDIA 5
 #define FN 6
-#define G_NUM 7   // Numbers (1-5) accessible from the GAME layer
+#define UNI 7
+#define G_NUM 8   // Numbers (1-5) accessible from the GAME layer
 
 &caps_word {
     continue-list = <UNDERSCORE MINUS LSHFT>;
@@ -25,9 +26,13 @@
 / {
 	conditional_layers {
 		compatible = "zmk,conditional-layers";
-		tri_layer {
+		tri_layer_numbers {
 			if-layers = <NAV SYMB>;
 			then-layer = <NUM>;
+		};
+		tri_layer_unicode {
+			if-layers = <SYMB FN>;
+			then-layer = <UNI>;
 		};
 	};
 
@@ -47,6 +52,53 @@
             #binding-cells = <0>;
             tapping-term-ms = <200>;
             bindings = <&kp LSHFT>, <&caps_word>;
+        };
+    };
+
+	macros {
+        l_uni_le: linux_unicode_less_than_or_equal {
+            label = "LINUX_UNICODE_LE";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+			wait-ms = <10>;
+			tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N4 &kp RET>;
+        };
+
+        l_uni_ge: linux_unicode_greater_than_or_equal {
+            label = "LINUX_UNICODE_GE";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+			wait-ms = <10>;
+			tap-ms = <10>;
+			bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N5 &kp RET>;
+        };
+
+		l_uni_qe: linux_unicode_questioned_equals {
+            label = "LINUX_UNICODE_QE";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+			wait-ms = <10>;
+			tap-ms = <10>;
+			bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N5 &kp F &kp RET>;
+        };
+
+		l_uni_re: linux_unicode_roughly_equals {
+            label = "LINUX_UNICODE_RE";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+			wait-ms = <10>;
+			tap-ms = <10>;
+			bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N4 &kp N8 &kp RET>;
+        };
+
+		l_uni_degree: linux_unicode_degree {
+            label = "LINUX_UNICODE_DEG";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+			wait-ms = <10>;
+			tap-ms = <10>;
+			bindings = <&kp LC(LS(U)) &kp N0 &kp N0 &kp B &kp N0 &kp RET>;
         };
     };
 
@@ -84,7 +136,7 @@
 &none     &none &none &none    &none    &none       /*|*/ &kp GRAVE &kp LBKT &kp EXCL  &kp RBKT &kp STAR &none
 &none     &none &none &none    &trans   &none       /*|*/ &kp AMPS  &kp LPAR &kp MINUS &kp RPAR &kp DLLR &kp CARET
 &kp LSHFT &none &none &none    &none    &none       /*|*/ &kp PRCNT &kp AT   &kp EQUAL &kp HASH &kp BSLH &none
-				      &kp LGUI &kp LALT &kp LCTRL   /*|*/ &none     &none    &none
+				      &kp LGUI &kp LALT &kp LCTRL   /*|*/ &none     &none    &mo FN
 			>;
 		};
 
@@ -109,9 +161,18 @@
 		function_layer {
 			bindings = <
 &kp PSCRN &none &bt BT_PRV   &bt BT_CLR &bt BT_NXT   &bt BT_SEL 0 /*|*/ &none   &kp F7 &kp F8 &kp F9 &none &kp C_SLEEP
-&none     &none &out OUT_USB &none      &out OUT_BLE &bt BT_SEL 1 /*|*/ &kp F12 &kp F4 &kp F5 &kp F6 &none &none
+&none     &none &out OUT_USB &mo SYMB   &out OUT_BLE &bt BT_SEL 1 /*|*/ &kp F12 &kp F4 &kp F5 &kp F6 &none &none
 &kp LSHFT &none &none        &none      &bt BT_SEL 3 &bt BT_SEL 2 /*|*/ &kp F11 &kp F1 &kp F2 &kp F3 &none &tog GAME
 				             &kp LGUI   &kp LALT     &kp LCTRL    /*|*/ &kp F10 &none  &none
+			>;
+		};
+
+		unicode_layer {
+			bindings = <
+&none &none &none &none &none &none /*|*/ &none &none &none     &l_uni_degree &none     &none
+&none &none &none &none &none &none /*|*/ &none &none &l_uni_re &none         &none     &none
+&none &none &none &none &none &none /*|*/ &none &none &l_uni_le &l_uni_ge     &l_uni_qe &none
+				  &none &none &none /*|*/ &none &none &none
 			>;
 		};
 
