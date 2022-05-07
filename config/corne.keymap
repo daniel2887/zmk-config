@@ -46,14 +46,22 @@
             bindings = <&mo>, <&kp>;
         };
 
-    tdsc: tap_dance_shift_caps_word {
+        tdsc: tap_dance_shift_caps_word {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_DANCE_SHIFT_CAPS_WORD";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
             bindings = <&kp LSHFT>, <&caps_word>;
         };
-    };
+
+        tdte: tap_dance_tab_esc {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_TAB_ESC";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp TAB>, <&kp ESC>;
+        };
+ };
 
 	macros {
         l_uni_le: linux_unicode_less_than_or_equal {
@@ -115,10 +123,10 @@
 
 		gaming_layer {
 			bindings = <
-&kp TAB          &kp Q &kp W &kp E     &kp R          &kp T     /*|*/ &kp Y     &kp U       &kp I     &kp O   &kp P    &kp BSPC
-&lt MEDIA LGUI   &kp A &kp S &kp D     &kp F          &kp G     /*|*/ &kp H     &kp J       &kp K     &kp L   &kp SEMI &kp SQT
-&kp LSHFT        &kp Z &kp X &kp C     &kp V          &kp B     /*|*/ &kp N     &kp M       &kp COMMA &kp DOT &kp FSLH &kp RET
-                             &kp LCTRL &lt G_NUM LALT &kp SPACE /*|*/ &kp SPACE &lt NAV RET &mo FN
+&tdte          &kp Q &kp W &kp E     &kp R          &kp T     /*|*/ &kp Y     &kp U       &kp I     &kp O   &kp P    &kp BSPC
+&lt MEDIA LGUI &kp A &kp S &kp D     &kp F          &kp G     /*|*/ &kp H     &kp J       &kp K     &kp L   &kp SEMI &kp SQT
+&kp LSHFT      &kp Z &kp X &kp C     &kp V          &kp B     /*|*/ &kp N     &kp M       &kp COMMA &kp DOT &kp FSLH &kp RET
+                           &kp LCTRL &lt G_NUM LALT &kp SPACE /*|*/ &kp SPACE &lt NAV RET &mo FN
 			>;
 		};
 
@@ -151,10 +159,10 @@
 
 		media_layer {
 			bindings = <
-&none &none &kp C_PREV &kp C_PP &kp C_NEXT &kp C_VOL_UP /*|*/ &none &none &none &none &none &none
-&none &none &none      &none    &none      &kp C_MUTE   /*|*/ &none &none &none &none &none &none
-&none &none &none      &none    &none      &kp C_VOL_DN /*|*/ &none &none &none &none &none &none
-					   &none    &none      &none        /*|*/ &none &none &none
+&kp ESC &none &kp C_PREV &kp C_PP &kp C_NEXT &kp C_VOL_UP /*|*/ &none &none &none &none &none &none
+&none   &none &none      &none    &none      &kp C_MUTE   /*|*/ &none &none &none &none &none &none
+&none   &none &none      &none    &none      &kp C_VOL_DN /*|*/ &none &none &none &none &none &none
+                         &none    &none      &none        /*|*/ &none &none &none
 			>;
 		};
 
@@ -186,3 +194,4 @@
 		};
 	};
 };
+
