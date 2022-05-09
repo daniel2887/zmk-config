@@ -114,19 +114,19 @@
 		compatible = "zmk,keymap";
 		default_layer {
 			bindings = <
-&kp TAB &kp Q         &kp W    &kp E      &kp R            &kp T     /*|*/ &kp Y     &kp U       &kp I     &kp O   &kp P    &kp BSPC
-&none   &kp A         &kp S    &lt SYMB D &lt NAV F        &kp G     /*|*/ &kp H     &kp J       &kp K     &kp L   &kp SEMI &kp SQT
-&tdsc   &mltp MEDIA Z &kp X    &kp C      &kp V            &kp B     /*|*/ &kp N     &kp M       &kp COMMA &kp DOT &kp FSLH &kp RET
-                               &kp LGUI   &mt LALT K_CMENU &kp LCTRL /*|*/ &kp SPACE &lt NAV RET &mo FN
+&kp TAB &kp Q         &kp W    &kp E      &kp R            &kp T     /*|*/ &kp Y     &kp U   &kp I     &kp O   &kp P    &kp BSPC
+&none   &kp A         &kp S    &lt SYMB D &lt NAV F        &kp G     /*|*/ &kp H     &kp J   &kp K     &kp L   &kp SEMI &kp SQT
+&tdsc   &mltp MEDIA Z &kp X    &kp C      &kp V            &kp B     /*|*/ &kp N     &kp M   &kp COMMA &kp DOT &kp FSLH &kp RET
+                               &kp LGUI   &mt LALT K_CMENU &kp LCTRL /*|*/ &kp SPACE &mo NAV &mo FN
 			>;
 		};
 
 		gaming_layer {
 			bindings = <
-&tdte          &kp Q &kp W &kp E     &kp R          &kp T     /*|*/ &kp Y     &kp U       &kp I     &kp O   &kp P    &kp BSPC
-&lt MEDIA LGUI &kp A &kp S &kp D     &kp F          &kp G     /*|*/ &kp H     &kp J       &kp K     &kp L   &kp SEMI &kp SQT
-&kp LSHFT      &kp Z &kp X &kp C     &kp V          &kp B     /*|*/ &kp N     &kp M       &kp COMMA &kp DOT &kp FSLH &kp RET
-                           &kp LCTRL &lt G_NUM LALT &kp SPACE /*|*/ &kp SPACE &lt NAV RET &mo FN
+&tdte          &kp Q &kp W &kp E     &kp R          &kp T     /*|*/ &kp Y     &kp U   &kp I     &kp O   &kp P    &kp BSPC
+&lt MEDIA LGUI &kp A &kp S &kp D     &kp F          &kp G     /*|*/ &kp H     &kp J   &kp K     &kp L   &kp SEMI &kp SQT
+&kp LSHFT      &kp Z &kp X &kp C     &kp V          &kp B     /*|*/ &kp N     &kp M   &kp COMMA &kp DOT &kp FSLH &kp RET
+                           &kp LCTRL &lt G_NUM LALT &kp SPACE /*|*/ &kp SPACE &mo NAV &mo FN
 			>;
 		};
 
