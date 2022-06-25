@@ -15,10 +15,10 @@
 #define SYMB 3
 #define NUM 4
 #define MEDIA 5
-#define FN 6
-#define UNI 7
-#define G_NUM 8   // Numbers (1-5) accessible from the GAME layer
-#define ARROWS 9
+#define ARROWS 6
+#define FN 7
+#define UNI 8
+#define G_NUM 9   // Numbers (1-5) accessible from the GAME layer
 
 &caps_word {
     continue-list = <UNDERSCORE MINUS LSHFT>;
@@ -63,12 +63,12 @@
             bindings = <&kp TAB>, <&kp ESC>;
         };
 
-        tdlt: tap_dance_layer_toggle {
+        tdtl: tap_dance_to_layer {
             compatible = "zmk,behavior-tap-dance";
-            label = "TAP_DANCE_LAYER_TOG";
+            label = "TAP_DANCE_TO_LAYER";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&tog DEFAULT>, <&tog GAME>, <&tog ARROWS>;
+            tapping-term-ms = <1000>;
+            bindings = <&to DEFAULT>, <&to GAME>, <&to ARROWS>;
         };
 	};
 
@@ -175,11 +175,20 @@
 			>;
 		};
 
+		arrows_layer {
+			bindings = <
+&kp ESC &none &none    &kp UP   &none     &kp C_VOL_UP /*|*/ &none &none &none &none &none &none
+&none   &none &kp LEFT &kp DOWN &kp RIGHT &kp C_MUTE   /*|*/ &none &none &none &none &none &none
+&none   &none &none    &none    &none     &kp C_VOL_DN /*|*/ &none &none &none &none &none &none
+                       &none    &none     &kp SPACE    /*|*/ &none &none &mo FN
+			>;
+		};
+
 		function_layer {
 			bindings = <
 &kp PSCRN &none &bt BT_PRV   &bt BT_CLR &bt BT_NXT   &bt BT_SEL 0 /*|*/ &none   &kp F7 &kp F8 &kp F9 &none &kp C_SLEEP
 &none     &none &out OUT_USB &mo SYMB   &out OUT_BLE &bt BT_SEL 1 /*|*/ &kp F12 &kp F4 &kp F5 &kp F6 &none &none
-&kp LSHFT &none &none        &none      &bt BT_SEL 3 &bt BT_SEL 2 /*|*/ &kp F11 &kp F1 &kp F2 &kp F3 &none &tdlt
+&kp LSHFT &none &none        &none      &bt BT_SEL 3 &bt BT_SEL 2 /*|*/ &kp F11 &kp F1 &kp F2 &kp F3 &none &tdtl
 				             &kp LGUI   &kp LALT     &kp LCTRL    /*|*/ &kp F10 &none  &none
 			>;
 		};
@@ -199,15 +208,6 @@
 &none   &none  &none &none  &kp N4 &none /*|*/ &none &none &none &none &none &none
 &none   &none  &none &none  &kp N5 &none /*|*/ &none &none &none &none &none &none
 					 &none  &none  &none /*|*/ &none &none &none
-			>;
-		};
-
-		arrows_layer {
-			bindings = <
-&kp ESC &none &none    &kp UP   &none     &kp C_VOL_UP /*|*/ &none &none &none &none &none &none
-&none   &none &kp LEFT &kp DOWN &kp RIGHT &kp C_MUTE   /*|*/ &none &none &none &none &none &none
-&none   &none &none    &none    &none     &kp C_VOL_DN /*|*/ &none &none &none &none &none &none
-                       &none    &none     &kp SPACE    /*|*/ &none &none &mo FN
 			>;
 		};
 	};
