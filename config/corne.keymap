@@ -26,17 +26,26 @@
 };
 
 / {
-        conditional_layers {
-                compatible = "zmk,conditional-layers";
-                tri_layer_numbers {
-                        if-layers = <NAV SYMB>;
-                        then-layer = <NUM>;
-                };
-                tri_layer_unicode {
-                        if-layers = <SYMB FN>;
-                        then-layer = <UNI>;
-                };
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer_numbers {
+                if-layers = <NAV SYMB>;
+                then-layer = <NUM>;
         };
+        tri_layer_unicode {
+                if-layers = <SYMB FN>;
+                then-layer = <UNI>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+        combo_caps_word{
+            timeout-ms = <75>;
+            key-positions = <14 21>; // S + L (the two home row shift mods)
+            bindings = <&caps_word>;
+        };
+    };
 
     behaviors {
         mltp: media_layer_tap_preferred {
@@ -186,7 +195,7 @@
 &none     &none &none     &none    &none    &none       /*|*/ &kp GRAVE &kp LBKT &kp EXCL  &kp RBKT &kp STAR &none
 &none     &none &kp LSHFT &none    &trans   &none       /*|*/ &kp AMPS  &kp LPAR &kp MINUS &kp RPAR &kp DLLR &kp CARET
 &kp LSHFT &none &none     &none    &none    &none       /*|*/ &kp PRCNT &kp AT   &kp EQUAL &kp HASH &kp BSLH &none
-                          &kp LGUI &kp LALT &kp LCTRL   /*|*/ &kp SQT   &none    &mo FN
+                          &kp LGUI &kp LALT &kp LCTRL   /*|*/ &kp DQT   &kp SQT  &mo FN
                                       >;
             };
 
