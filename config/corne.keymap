@@ -1,3 +1,4 @@
+// vim: set expandtab:ts=4:sw=4
 /*
  * Copyright (c) 2020 The ZMK Contributors
  *
@@ -25,25 +26,25 @@
 };
 
 / {
-	conditional_layers {
-		compatible = "zmk,conditional-layers";
-		tri_layer_numbers {
-			if-layers = <NAV SYMB>;
-			then-layer = <NUM>;
-		};
-		tri_layer_unicode {
-			if-layers = <SYMB FN>;
-			then-layer = <UNI>;
-		};
-	};
+        conditional_layers {
+                compatible = "zmk,conditional-layers";
+                tri_layer_numbers {
+                        if-layers = <NAV SYMB>;
+                        then-layer = <NUM>;
+                };
+                tri_layer_unicode {
+                        if-layers = <SYMB FN>;
+                        then-layer = <UNI>;
+                };
+        };
 
     behaviors {
         mltp: media_layer_tap_preferred {
             compatible = "zmk,behavior-hold-tap";
             label = "MEDIA_LAYER_TAP_PREFERRED";
             #binding-cells = <2>;
-			flavor = "tap-preferred";
-			tapping-term-ms = <300>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <300>;
             bindings = <&mo>, <&kp>;
         };
 
@@ -70,15 +71,15 @@
             tapping-term-ms = <1000>;
             bindings = <&to DEFAULT>, <&to GAME>, <&to ARROWS>;
         };
-	};
+    };
 
-	macros {
+    macros {
         l_uni_le: linux_unicode_less_than_or_equal {
             label = "LINUX_UNICODE_LE";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-			wait-ms = <10>;
-			tap-ms = <10>;
+            wait-ms = <10>;
+            tap-ms = <10>;
             bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N4 &kp RET>;
         };
 
@@ -86,130 +87,130 @@
             label = "LINUX_UNICODE_GE";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-			wait-ms = <10>;
-			tap-ms = <10>;
-			bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N5 &kp RET>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N5 &kp RET>;
         };
 
-		l_uni_qe: linux_unicode_questioned_equals {
+        l_uni_qe: linux_unicode_questioned_equals {
             label = "LINUX_UNICODE_QE";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-			wait-ms = <10>;
-			tap-ms = <10>;
-			bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N5 &kp F &kp RET>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N5 &kp F &kp RET>;
         };
 
-		l_uni_re: linux_unicode_roughly_equals {
+        l_uni_re: linux_unicode_roughly_equals {
             label = "LINUX_UNICODE_RE";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-			wait-ms = <10>;
-			tap-ms = <10>;
-			bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N4 &kp N8 &kp RET>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N4 &kp N8 &kp RET>;
         };
 
-		l_uni_degree: linux_unicode_degree {
+        l_uni_degree: linux_unicode_degree {
             label = "LINUX_UNICODE_DEG";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-			wait-ms = <10>;
-			tap-ms = <10>;
-			bindings = <&kp LC(LS(U)) &kp N0 &kp N0 &kp B &kp N0 &kp RET>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N0 &kp N0 &kp B &kp N0 &kp RET>;
         };
     };
 
-	keymap {
-		compatible = "zmk,keymap";
-		default_layer {
-			bindings = <
+    keymap {
+            compatible = "zmk,keymap";
+            default_layer {
+                    bindings = <
 &kp TAB &kp Q         &kp W    &kp E      &kp R            &kp T     /*|*/ &kp Y     &kp U   &kp I     &kp O   &kp P    &kp BSPC
 &none   &kp A         &kp S    &lt SYMB D &lt NAV F        &kp G     /*|*/ &kp H     &kp J   &kp K     &kp L   &kp SEMI &kp SQT
 &tdsc   &mltp MEDIA Z &kp X    &kp C      &kp V            &kp B     /*|*/ &kp N     &kp M   &kp COMMA &kp DOT &kp FSLH &kp RET
                                &kp LGUI   &mt LALT K_CMENU &kp LCTRL /*|*/ &kp SPACE &mo NAV &mo FN
-			>;
-		};
+                               >;
+            };
 
-		gaming_layer {
-			bindings = <
+            gaming_layer {
+                    bindings = <
 &tdte          &kp Q &kp W &kp E     &kp R          &kp T     /*|*/ &kp Y     &kp U   &kp I     &kp O   &kp P    &kp BSPC
 &lt MEDIA LGUI &kp A &kp S &kp D     &kp F          &kp G     /*|*/ &kp H     &kp J   &kp K     &kp L   &kp SEMI &kp SQT
 &kp LSHFT      &kp Z &kp X &kp C     &kp V          &kp B     /*|*/ &kp N     &kp M   &kp COMMA &kp DOT &kp FSLH &kp RET
                            &kp LCTRL &lt G_NUM LALT &kp SPACE /*|*/ &kp SPACE &mo NAV &mo FN
-			>;
-		};
+                           >;
+            };
 
-		navigation_layer {
-			bindings = <
+            navigation_layer {
+                    bindings = <
 &none     &kp ESC &none &kp LC(LA(UP)) &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP           &kp END           &kp DEL &kp BSPC
 &none     &none   &none &trans         &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
 &kp LSHFT &none   &none &none          &none    &none             /*|*/ &none     &none    &kp LC(LA(LEFT)) &kp LC(LA(RIGHT)) &none   &none
-				        &kp LGUI      &kp LALT &kp LCTRL          /*|*/ &kp BSPC  &kp DEL  &none
-			>;
-		};
+                        &kp LGUI      &kp LALT &kp LCTRL          /*|*/ &kp BSPC  &kp DEL  &none
+                        >;
+            };
 
-		symbols_layer {
-			bindings = <
+            symbols_layer {
+                    bindings = <
 &none     &none &none &none    &none    &none       /*|*/ &kp GRAVE &kp LBKT &kp EXCL  &kp RBKT &kp STAR &none
 &none     &none &none &none    &trans   &none       /*|*/ &kp AMPS  &kp LPAR &kp MINUS &kp RPAR &kp DLLR &kp CARET
 &kp LSHFT &none &none &none    &none    &none       /*|*/ &kp PRCNT &kp AT   &kp EQUAL &kp HASH &kp BSLH &none
-				      &kp LGUI &kp LALT &kp LCTRL   /*|*/ &none     &none    &mo FN
-			>;
-		};
+                      &kp LGUI &kp LALT &kp LCTRL   /*|*/ &none     &none    &mo FN
+                                      >;
+            };
 
-		numbers_layer {
-			bindings = <
+            numbers_layer {
+                    bindings = <
 &none     &none &none &none    &none    &none     /*|*/ &none   &kp N7 &kp N8 &kp N9 &kp STAR &none
 &none     &none &none &none    &none    &none     /*|*/ &none   &kp N4 &kp N5 &kp N6 &none    &none
 &kp LSHFT &none &none &none    &none    &none     /*|*/ &kp DOT &kp N1 &kp N2 &kp N3 &kp FSLH &none
-				      &kp LGUI &kp LALT &kp LCTRL /*|*/ &kp N0  &none  &none
-			>;
-		};
+                      &kp LGUI &kp LALT &kp LCTRL /*|*/ &kp N0  &none  &none
+                      >;
+            };
 
-		media_layer {
-			bindings = <
+            media_layer {
+                    bindings = <
 &kp ESC &none &kp C_PREV &kp C_PP &kp C_NEXT &kp C_VOL_UP /*|*/ &none &none &none &none &none &none
 &none   &none &none      &none    &none      &kp C_MUTE   /*|*/ &none &none &none &none &none &none
 &none   &none &none      &none    &none      &kp C_VOL_DN /*|*/ &none &none &none &none &none &none
                          &none    &none      &none        /*|*/ &none &none &none
-			>;
-		};
+                         >;
+            };
 
-		arrows_layer {
-			bindings = <
+            arrows_layer {
+                    bindings = <
 &kp ESC &none &none    &kp UP   &none     &kp C_VOL_UP /*|*/ &kp C_VOL_UP &none    &kp UP   &none     &none &none
 &none   &none &kp LEFT &kp DOWN &kp RIGHT &kp C_MUTE   /*|*/ &kp C_MUTE   &kp LEFT &kp DOWN &kp RIGHT &none &none
 &none   &none &none    &none    &none     &kp C_VOL_DN /*|*/ &kp C_VOL_DN &none    &none    &none     &none &none
                        &none    &none     &kp SPACE    /*|*/ &kp SPACE    &none    &mo FN
-			>;
-		};
+                       >;
+            };
 
-		function_layer {
-			bindings = <
+            function_layer {
+                    bindings = <
 &kp PSCRN &none &bt BT_PRV   &bt BT_CLR &bt BT_NXT   &bt BT_SEL 0 /*|*/ &none   &kp F7 &kp F8 &kp F9 &none &kp C_SLEEP
 &none     &none &out OUT_USB &mo SYMB   &out OUT_BLE &bt BT_SEL 1 /*|*/ &kp F12 &kp F4 &kp F5 &kp F6 &none &none
 &kp LSHFT &none &none        &none      &bt BT_SEL 3 &bt BT_SEL 2 /*|*/ &kp F11 &kp F1 &kp F2 &kp F3 &none &tdtl
-				             &kp LGUI   &kp LALT     &kp LCTRL    /*|*/ &kp F10 &none  &none
-			>;
-		};
+                             &kp LGUI   &kp LALT     &kp LCTRL    /*|*/ &kp F10 &none  &none
+                             >;
+            };
 
-		unicode_layer {
-			bindings = <
+            unicode_layer {
+                    bindings = <
 &none &none &none &none &none &none /*|*/ &none &none &none     &l_uni_degree &none     &none
 &none &none &none &none &none &none /*|*/ &none &none &l_uni_re &none         &none     &none
 &none &none &none &none &none &none /*|*/ &none &none &l_uni_le &l_uni_ge     &l_uni_qe &none
-				  &none &none &none /*|*/ &none &none &none
-			>;
-		};
+                  &none &none &none /*|*/ &none &none &none
+                  >;
+            };
 
-		game_number_layer {
-			bindings = <
+            game_number_layer {
+                    bindings = <
 &kp ESC &kp N1 &none &kp N2 &kp N3 &kp N6 /*|*/ &none &none &none &none &none &none
 &none   &none  &none &none  &kp N4 &kp N7 /*|*/ &none &none &none &none &none &none
 &none   &none  &none &none  &kp N5 &kp N8 /*|*/ &none &none &none &none &none &none
-					 &none  &none  &none  /*|*/ &none &none &none
-			>;
-		};
-	};
+                     &none  &none  &none  /*|*/ &none &none &none
+                     >;
+            };
+    };
 };
 
