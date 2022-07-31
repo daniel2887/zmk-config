@@ -107,9 +107,9 @@
             quick-tap-ms = <200>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <
-                1  2  3  4  5     // Q - T
-                13 14 15 16 17    // A - G
-                25 26 27 28 29    // Z - B
+                0  1  2  3  4  5  // Tab - T
+                13 14 15 16 17    // A   - G
+                25 26 27 28 29    // Z   - B
             >;    // <---[[left hand keys]]
         };
     };
