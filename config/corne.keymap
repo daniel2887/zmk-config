@@ -93,7 +93,7 @@
             hold-trigger-key-positions = <
                 6  7  8  9  10    // Y - P
                 18 19 20 21 22 23 // H - '
-                30 31 32 33 34    // N - ?
+                30 31 32 33 34 35 // N - Enter
             >;    // <---[[right-hand keys]]
         };
 
