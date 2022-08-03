@@ -181,10 +181,10 @@
 
             navigation_layer {
                     bindings = <
-&none     &kp ESC &none     &kp LC(LA(UP)) &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP           &kp END           &kp DEL &kp BSPC
-&none     &none   &kp LSHFT &trans         &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
-&kp LSHFT &none   &none     &none          &none    &none             /*|*/ &none     &none    &kp LC(LA(LEFT)) &kp LC(LA(RIGHT)) &none   &none
-                            &kp LGUI       &kp LALT &kp LCTRL         /*|*/ &kp BSPC  &kp DEL  &none
+&none     &kp ESC &none &none    &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP           &kp END           &kp DEL &kp BSPC
+&none     &none   &tdsc &trans   &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
+&kp LSHFT &none   &none &none    &none    &none             /*|*/ &none     &none    &kp LC(LA(LEFT)) &kp LC(LA(RIGHT)) &none   &none
+                        &kp LGUI &kp LALT &kp LCTRL         /*|*/ &kp BSPC  &none    &none
                         >;
             };
 
@@ -193,7 +193,7 @@
 &none     &none &none     &none    &none    &none       /*|*/ &kp GRAVE &kp LBKT &kp EXCL  &kp RBKT &kp STAR &none
 &none     &none &kp LSHFT &none    &trans   &none       /*|*/ &kp AMPS  &kp LPAR &kp MINUS &kp RPAR &kp DLLR &kp CARET
 &kp LSHFT &none &none     &none    &none    &none       /*|*/ &kp PRCNT &kp AT   &kp EQUAL &kp HASH &kp BSLH &none
-                          &kp LGUI &kp LALT &kp LCTRL   /*|*/ &kp DQT   &kp SQT  &mo FN
+                          &kp LGUI &kp LALT &kp LCTRL   /*|*/ &none     &none    &mo FN
                                       >;
             };
 
