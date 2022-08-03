@@ -88,7 +88,6 @@
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <150>;                        // <---[[produces tap if held longer than tapping-term-ms]]
-            quick-tap-ms = <200>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <
                 6  7  8  9  10    // Y - P
@@ -104,7 +103,6 @@
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <150>;                        // <---[[produces tap if held longer than tapping-term-ms]]
-            quick-tap-ms = <200>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <
                 0  1  2  3  4  5  // Tab - T
