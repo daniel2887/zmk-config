@@ -88,6 +88,18 @@
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <150>;                        // <---[[produces tap if held longer than tapping-term-ms]]
+            // Retro tap fixes this issue:
+            // 1. Press one home row mod
+            // 2. Press a second home row mod
+            // 3. Wait a bit (slow typing)
+            // 4. Release second home row mod
+            // Expected: First home row mod hold behavior applied to second home row mod tap behavior
+            // Actual: Nothing happens, because the second home row mod is held
+            //     long enough for hold behavior to be invoked, but no other key
+            //     (except for the first home row mod which was already pressed)
+            //     gets tapped. Retro tap foces the second home row mod to emit
+            //     tap behavior when it finally gets released.
+            retro-tap;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <
                 6  7  8  9  10    // Y - P
@@ -103,6 +115,8 @@
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <150>;                        // <---[[produces tap if held longer than tapping-term-ms]]
+            // See retro-tap expalanation above
+            retro-tap;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <
                 0  1  2  3  4  5  // Tab - T
