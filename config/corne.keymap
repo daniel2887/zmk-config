@@ -177,9 +177,9 @@
             compatible = "zmk,keymap";
             default_layer {
                     bindings = <
-&kp TAB &kp Q         &kp W          &kp E      &kp R            &kp T     /*|*/ &kp Y     &kp U   &kp I     &kp O          &kp P    &kp BSPC
-&none   &kp A         &lh_pht LSFT S &lt SYMB D &lt NAV F        &kp G     /*|*/ &kp H     &kp J   &kp K     &rh_pht LSFT L &kp SEMI &kp SQT
-&tdsc   &mltp MEDIA Z &kp X          &kp C      &kp V            &kp B     /*|*/ &kp N     &kp M   &kp COMMA &kp DOT        &kp FSLH &kp RET
+&kp TAB    &kp Q         &kp W          &kp E      &kp R            &kp T     /*|*/ &kp Y     &kp U   &kp I     &kp O          &kp P    &kp BSPC
+&caps_word &kp A         &lh_pht LSFT S &lt SYMB D &lt NAV F        &kp G     /*|*/ &kp H     &kp J   &kp K     &rh_pht LSFT L &kp SEMI &kp SQT
+&tdsc      &mltp MEDIA Z &kp X          &kp C      &kp V            &kp B     /*|*/ &kp N     &kp M   &kp COMMA &kp DOT        &kp FSLH &kp RET
                                      &kp LGUI   &mt LALT K_CMENU &kp LCTRL /*|*/ &kp SPACE &mo NAV &mo FN
                                >;
             };
@@ -196,7 +196,7 @@
             navigation_layer {
                     bindings = <
 &none     &kp ESC &none &none    &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP           &kp END           &kp DEL &kp BSPC
-&none     &none   &tdsc &trans   &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
+&none     &none   &none &trans   &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
 &kp LSHFT &none   &none &none    &none    &none             /*|*/ &none     &none    &kp LC(LA(LEFT)) &kp LC(LA(RIGHT)) &none   &none
                         &kp LGUI &kp LALT &kp LCTRL         /*|*/ &kp BSPC  &none    &none
                         >;
