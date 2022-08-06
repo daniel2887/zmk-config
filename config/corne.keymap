@@ -145,6 +145,16 @@
             flavor = "tap-preferred";
             bindings = <&mo>, <&caps_word>;
         };
+
+        lt_mk: layer_tap_mo_kp {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LT_MK";
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            flavor = "tap-preferred";
+            quick-tap-ms = <200>;
+            bindings = <&mo>, <&kp>;
+        };
     };
 
     macros {
@@ -207,10 +217,10 @@
 
             gaming_layer {
                     bindings = <
-&tdte          &kp Q &kp W &kp E     &kp R          &kp T     /*|*/ &kp Y     &kp U   &kp I     &kp O   &kp P    &kp BSPC
-&lt MEDIA LGUI &kp A &kp S &kp D     &kp F          &kp G     /*|*/ &kp H     &kp J   &kp K     &kp L   &kp SEMI &kp SQT
-&kp LSHFT      &kp Z &kp X &kp C     &kp V          &kp B     /*|*/ &kp N     &kp M   &kp COMMA &kp DOT &kp FSLH &kp RET
-                           &kp LCTRL &lt G_NUM LALT &kp SPACE /*|*/ &kp SPACE &mo NAV &mo FN
+&tdte          &kp Q &kp W &kp E     &kp R             &kp T     /*|*/ &kp Y     &kp U   &kp I     &kp O   &kp P    &kp BSPC
+&lt MEDIA LGUI &kp A &kp S &kp D     &kp F             &kp G     /*|*/ &kp H     &kp J   &kp K     &kp L   &kp SEMI &kp SQT
+&kp LSHFT      &kp Z &kp X &kp C     &kp V             &kp B     /*|*/ &kp N     &kp M   &kp COMMA &kp DOT &kp FSLH &kp RET
+                           &kp LCTRL &lt_mk G_NUM LALT &kp SPACE /*|*/ &kp SPACE &mo NAV &mo FN
                            >;
             };
 
