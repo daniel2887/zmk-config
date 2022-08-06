@@ -89,7 +89,7 @@
             compatible = "zmk,behavior-hold-tap";
             label = "LEFT_POSITIONAL_HOLD_TAP";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
+            flavor = "tap-unless-interrupted";
             tapping-term-ms = <150>;                        // <---[[produces tap if held longer than tapping-term-ms]]
             // Retro tap fixes this issue:
             // 1. Press one home row mod
@@ -116,7 +116,7 @@
             compatible = "zmk,behavior-hold-tap";
             label = "RIGHT_POSITIONAL_HOLD_TAP";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
+            flavor = "tap-unless-interrupted";
             tapping-term-ms = <150>;                        // <---[[produces tap if held longer than tapping-term-ms]]
             // See retro-tap expalanation above
             retro-tap;
