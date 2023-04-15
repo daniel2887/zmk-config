@@ -1,0 +1,30 @@
+#include <dt-bindings/zmk/trackball_pim447.h>
+
+&pro_micro_i2c {
+	pim447_trackball@a {
+		compatible = "pimoroni,trackball_pim447";
+		reg = <0xa>;
+		label = "PIM447_TRACKBALL";
+		swap-axes;
+		invert-move-x;
+		power-layer = <10>; /* MOUSE layer */
+		//idle-timeout = <10>; /* in seconds */
+
+		/* Modified from,
+		 * https://gitlab.com/voidyourwarranty/zmk-yackboard/-/blob/0f6f8e19688af082116604acf793aca25d5de1f1/app/boards/shields/yackboard/yackboard_right.overlay
+		 */
+		mode = <PIM447_MOVE>;        // default: PIM447_MOVE for mouse move; alternatives: PIM447_SCROLL for scroll wheel, PIM447_TOGGLE for toggle on button press
+		move-factor-x = <100>;       // Sensitivity X; default: 100
+		move-factor-y = <100>;       // Sensitivity Y; default: 100
+		move-inertia-x = <90>;       // Inertia X, between 0 (no inertia) and 99 (huge inertia); default: 0; note that some inertia is needed for acceleration
+		move-inertia-y = <90>;       // Inertia Y, between 0 (no inertia) and 99 (huge inertia); default: 0; note that some inertia is needed for acceleration
+		norm = <PIM447_NORM_EUCLID>; // Metric for 2d distance measurement; default: PIM447_NORM_EUCLID; alternative: PIM447_NORM_MAX in order to enhance diagonal movement
+		exactness = <5>;             // Range of small velocities that are not accelerated
+		max-accel = <100>;           // Maximum acceleration; default: 100
+		scroll-divisor-x = <1>;      // Increase wheel velocity (default: 2)
+		scroll-divisor-y = <1>;      // Increase wheel velocity (default: 2)
+		invert-scroll-x;             // Invert wheel X axis (left is right, and vice versa)
+		button = <0>;                // Send mouse button 4 when pressing the ball which is usually ignored by the operating system (default: 0, ie. left-click)
+		poll-interval = <10>;        // Interval in milli-seconds at which the track ball is polled (default: 50)
+	};
+};

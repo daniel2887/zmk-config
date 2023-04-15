@@ -7,9 +7,11 @@
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/mouse.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
 
+// TODO: try to move these to a zmk-config corne.dtsi so that I can use these in layer definition for PIM447
 #define DEFAULT 0
 #define GAME 1
 #define NAV 2
@@ -20,9 +22,12 @@
 #define FN 7
 #define UNI 8
 #define G_NUM 9   // Numbers (1-5) accessible from the GAME layer
+#define MOUSE 10
 
 &caps_word {
-    continue-list = <UNDERSCORE MINUS LSHFT FSLH BSLH N0 N1 N2 N3 N4 N5 N6 N7 N8 N9>;
+    continue-list = <UNDERSCORE MINUS FSLH BSLH N0 N1 N2 N3 N4 N5 N6 N7 N8 N9>;
+    timeout = <3>;
+    break-on-mod; /* stop caps_word when pressing a modifier */
 };
 
 / {
@@ -212,7 +217,7 @@
             default_layer {
                     bindings = <
 &kp TAB    &kp Q         &kp W          &kp E      &kp R            &kp T     /*|*/ &kp Y     &kp U        &kp I     &kp O          &kp P    &kp BSPC
-&none      &kp A         &lh_pht LSFT S &lt SYMB D &lt NAV F        &kp G     /*|*/ &kp H     &kp J        &kp K     &rh_pht LSFT L &kp SEMI &kp SQT
+&mo MOUSE  &kp A         &lh_pht LSFT S &lt SYMB D &lt NAV F        &kp G     /*|*/ &kp H     &kp J        &kp K     &rh_pht LSFT L &kp SEMI &kp SQT
 &kp LSHFT  &mltp MEDIA Z &kp X          &kp C      &kp V            &kp B     /*|*/ &kp N     &kp M        &kp COMMA &kp DOT        &kp FSLH &kp RET
                                         &kp LGUI   &mt LALT K_CMENU &kp LCTRL /*|*/ &kp SPACE &lt_cw NAV 0 &mo FN
                                >;
@@ -296,6 +301,15 @@
 &none   &none  &none &none  &kp N4 &kp N7 /*|*/ &none &none &none &none &none &none
 &none   &none  &none &none  &kp N5 &kp N8 /*|*/ &none &none &none &none &none &none
                      &none  &none  &none  /*|*/ &none &none &none
+                     >;
+            };
+
+            mouse_layer {
+                    bindings = <
+&none &none &none    &none    &none               &none     /*|*/ &none     &none     &none &none &none &none
+&none &none &kp LSFT &none    &pim447_scroll_move &none     /*|*/ &none     &none     &none &none &none &none
+&none &none &none    &none    &none               &none     /*|*/ &none     &none     &none &none &none &none
+                     &kp LGUI &kp LALT            &kp LCTRL /*|*/ &mkp LCLK &mkp MCLK &mkp RCLK
                      >;
             };
     };
