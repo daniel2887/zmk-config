@@ -61,7 +61,6 @@
     behaviors {
         mltp: media_layer_tap_preferred {
             compatible = "zmk,behavior-hold-tap";
-            label = "MEDIA_LAYER_TAP_PREFERRED";
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <300>;
@@ -73,7 +72,6 @@
 
         // tdsc: tap_dance_shift_caps_word {
         //     compatible = "zmk,behavior-tap-dance";
-        //     label = "TAP_DANCE_SHIFT_CAPS_WORD";
         //     #binding-cells = <0>;
         //     tapping-term-ms = <200>;
         //     bindings = <&kp LSHFT>, <&caps_word>;
@@ -81,7 +79,6 @@
 
         tdte: tap_dance_tab_esc {
             compatible = "zmk,behavior-tap-dance";
-            label = "TAP_DANCE_TAB_ESC";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
             bindings = <&kp TAB>, <&kp ESC>;
@@ -89,7 +86,6 @@
 
         tdtl: tap_dance_to_layer {
             compatible = "zmk,behavior-tap-dance";
-            label = "TAP_DANCE_TO_LAYER";
             #binding-cells = <0>;
             tapping-term-ms = <1000>;
             bindings = <&to DEFAULT>, <&to GAME>, <&to ARROWS>;
@@ -98,7 +94,6 @@
         // From docs (https://zmk.dev/docs/behaviors/hold-tap#example-use-cases)
         lh_pht: left_hand_positional_hold_tap {
             compatible = "zmk,behavior-hold-tap";
-            label = "LEFT_POSITIONAL_HOLD_TAP";
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <150>;                        // <---[[produces tap if held longer than tapping-term-ms]]
@@ -125,7 +120,6 @@
         // From docs (https://zmk.dev/docs/behaviors/hold-tap#example-use-cases)
         rh_pht: right_hand_positional_hold_tap {
             compatible = "zmk,behavior-hold-tap";
-            label = "RIGHT_POSITIONAL_HOLD_TAP";
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <150>;                        // <---[[produces tap if held longer than tapping-term-ms]]
@@ -142,7 +136,6 @@
         // Usage example: &mt_cw LCTRL 0
         // mt_cw: mod_tap_caps_word {
         //     compatible = "zmk,behavior-hold-tap";
-        //     label = "MT_CW";
         //     #binding-cells = <2>;
         //     tapping-term-ms = <150>;
         //     flavor = "balanced";
@@ -153,7 +146,6 @@
         // Usage example: &lt_cw NAV 0
         lt_cw: layer_tap_caps_word {
             compatible = "zmk,behavior-hold-tap";
-            label = "LT_CW";
             #binding-cells = <2>;
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
@@ -162,7 +154,6 @@
 
         lt_mk: layer_tap_mo_kp {
             compatible = "zmk,behavior-hold-tap";
-            label = "LT_MK";
             #binding-cells = <2>;
             tapping-term-ms = <150>;
             flavor = "tap-preferred";
@@ -173,7 +164,6 @@
 
     macros {
         l_uni_le: linux_unicode_less_than_or_equal {
-            label = "LINUX_UNICODE_LE";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
@@ -182,7 +172,6 @@
         };
 
         l_uni_ge: linux_unicode_greater_than_or_equal {
-            label = "LINUX_UNICODE_GE";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
@@ -191,7 +180,6 @@
         };
 
         l_uni_qe: linux_unicode_questioned_equals {
-            label = "LINUX_UNICODE_QE";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
@@ -200,7 +188,6 @@
         };
 
         l_uni_re: linux_unicode_roughly_equals {
-            label = "LINUX_UNICODE_RE";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
@@ -209,7 +196,6 @@
         };
 
         l_uni_degree: linux_unicode_degree {
-            label = "LINUX_UNICODE_DEG";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
