@@ -1,3 +1,4 @@
+#ifdef CONFIG_ZMK_TRACKBALL_PIM447
 #include <dt-bindings/zmk/trackball_pim447.h>
 
 &pro_micro_i2c {
@@ -28,3 +29,4 @@
 		poll-interval = <10>;        // Interval in milli-seconds at which the track ball is polled (default: 50)
 	};
 };
+#endif // CONFIG_ZMK_TRACKBALL_PIM447
