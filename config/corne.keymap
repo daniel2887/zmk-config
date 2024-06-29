@@ -195,6 +195,14 @@
             bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N4 &kp N8 &kp RET>;
         };
 
+        l_uni_ne: linux_unicode_not_equals {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N0 &kp RET>;
+        };
+
         l_uni_degree: linux_unicode_degree {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -228,7 +236,7 @@
                     bindings = <
 &none     &kp ESC &none    &none    &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP           &kp END           &kp DEL &kp BSPC
 &none     &none   &kp LSFT &trans   &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
-&kp LSHFT &none   &none    &none    &none    &none             /*|*/ &none     &none    &kp LC(LA(LEFT)) &kp LC(LA(RIGHT)) &none   &none
+&kp LSHFT &none   &none    &none    &none    &none             /*|*/ &kp RET   &none    &kp LC(LA(LEFT)) &kp LC(LA(RIGHT)) &none   &none
                            &kp LGUI &kp LALT &kp LCTRL         /*|*/ &kp BSPC  &none    &none
                         >;
             };
@@ -280,7 +288,7 @@
 
             unicode_layer {
                     bindings = <
-&none &none &none &none &none &none /*|*/ &none &none &none     &l_uni_degree &none     &none
+&none &none &none &none &none &none /*|*/ &none &none &l_uni_ne &l_uni_degree &none     &none
 &none &none &none &none &none &none /*|*/ &none &none &l_uni_re &none         &none     &none
 &none &none &none &none &none &none /*|*/ &none &none &l_uni_le &l_uni_ge     &l_uni_qe &none
                   &none &none &none /*|*/ &none &none &none
