@@ -1,0 +1,64 @@
+#include "common_keymap.dtsi"
+
+/ {
+  keymap {
+    compatible = "zmk,keymap";
+
+    default_layer {
+      display-name = "DEFAULT";
+      bindings = <
+   __________DEF_L1__________                          __________DEF_R1__________
+   __________DEF_L2__________                          __________DEF_R2__________
+   __________DEF_L3__________                          __________DEF_R3__________
+                            &trans                    &trans
+   _________THUMB_DEF_L_______                         _________THUMB_DEF_R_______
+              >;
+      sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+      };
+
+    number_layer {
+      display-name = "NUMBER";
+      bindings = <
+   __________NUM_L1__________                          __________NUM_R1__________
+   __________NUM_L2__________                          __________NUM_R2__________
+   __________NUM_L3__________                          __________NUM_R3__________
+                            &trans                    &trans
+   _________THUMB_NUM_L_______                         _________THUMB_NUM_R_______
+              >;
+      };
+
+    symbol_layer {
+      display-name = "SYMBOL";
+      bindings = <
+   __________SYM_L1__________                          __________SYM_R1__________
+   __________SYM_L2__________                          __________SYM_R2__________
+   __________SYM_L3__________                          __________SYM_R3__________
+                            &trans                    &trans
+   _________THUMB_SYM_L_______                         _________THUMB_SYM_R_______
+              >;
+      };
+
+    navigation_layer {
+      display-name = "NAVIGATION";
+      bindings = <
+   __________NAV_L1__________                          __________NAV_R1__________
+   __________NAV_L2__________                          __________NAV_R2__________
+   __________NAV_L3__________                          __________NAV_R3__________
+                            &trans                    &trans
+   _________THUMB_NAV_L_______                         _________THUMB_NAV_R_______
+              >;
+      };
+
+    settings_layer {
+      display-name = "SETTINGS";
+      bindings = <
+   __________SET_L1__________                          __________SET_R1__________
+   __________SET_L2__________                          __________SET_R2__________
+   __________SET_L3__________                          __________SET_R3__________
+                            &trans                    &trans
+   _________THUMB_SET_L_______                         _________THUMB_SET_R_______
+              >;
+      };
+
+   };  
+};
