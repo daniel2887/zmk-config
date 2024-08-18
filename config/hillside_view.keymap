@@ -1,64 +1,421 @@
-#include "common_keymap.dtsi"
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h> 
+//#include <dt-bindings/zmk/rgb.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/outputs.h>
+
+#include <dt-bindings/zmk/mouse.h>
+#include <behaviors/mouse_keys.dtsi>
+
+#define DEFAULT 0
+#define GAME 1
+#define NAV 2
+#define SYMB 3
+#define NUM 4
+#define MEDIA 5
+#define ARROWS 6
+#define FN 7
+#define UNI_NAV 8 // navigation-like unicode characters (e.g., arrows)
+#define UNI_MATH 9 // math related unicode characters (e.g., approximately equals)
+#define G_NUM 10   // Numbers (1-5) accessible from the GAME layer
+#define MOUSE 11
+
+  // Key numbers
+  // -----------------------------------------------------------------------------------------
+  // | NONE |  1  |  2  |  3  |  4  |  5  |   |  6  |  7   |  8  |  9  |  10  | NONE |
+  // | NONE |  13 |  14 |  15 |  16 |  17 |   |  18 |  19  |  20 |  21 |  22  | NONE |
+  // | NONE |  25 |  26 |  27 |  28 |  29 |   |  30 |  31  |  32 |  33 |  34  | NONE |
+  //                                |  36 |   |  37 |
+  //              |  38 |  39 |  40 |  41 |   |  42 |  43 |  44  |  45 |
+
+&caps_word {
+    continue-list = <UNDERSCORE MINUS FSLH BSLH N0 N1 N2 N3 N4 N5 N6 N7 N8 N9>;
+    timeout = <3>;
+    break-on-mod; /* stop caps_word when pressing a modifier */
+};
 
 / {
-  keymap {
-    compatible = "zmk,keymap";
+	/* assign `input-listener` to all pointing devices */
+	/* &glidepoint0 on central, &glidepoint1 on peripheral */
+    tpad_central_listener {
+        compatible = "zmk,input-behavior-listener";
+        device = <&glidepoint0>;
+        y-invert;
+        scale-multiplier = <2>;
+        // xy-swap;
+        // x-invert;
+	};
 
-    default_layer {
-      display-name = "DEFAULT";
-      bindings = <
-   __________DEF_L1__________                          __________DEF_R1__________
-   __________DEF_L2__________                          __________DEF_R2__________
-   __________DEF_L3__________                          __________DEF_R3__________
-                            &trans                    &trans
-   _________THUMB_DEF_L_______                         _________THUMB_DEF_R_______
-              >;
-      sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+    tpad_peripheral_listener {
+        compatible = "zmk,input-behavior-listener";
+        device = <&glidepoint1>;
+        layers = <DEFAULT GAME NAV SYMB NUM MEDIA ARROWS FN UNI_NAV UNI_MATH G_NUM MOUSE>;
+        y-invert;
+        scale-multiplier = <2>;
+        /* NOTE: do NOT override event code here, */
+        /*       let Cirque glidepoint reports click from taps */
+        // evt-type = <INPUT_EV_REL>;
+        // x-input-code = <INPUT_REL_X>;
+        // y-input-code = <INPUT_REL_Y>;
+    };
+
+    tpad_peripheral_scroll {
+        compatible = "zmk,input-behavior-listener";
+        device = <&glidepoint1>;
+        layers = <NUM>;
+        /* NOTE: only apply input-code overriding for INPUT_EV_REL */
+        evt-type = <INPUT_EV_REL>;
+        x-input-code = <INPUT_REL_HWHEEL>;
+        y-input-code = <INPUT_REL_WHEEL>;
+        bindings = <&ib_wheel_scaler 1 8>;
+    };
+
+    ib_wheel_scaler: ib_wheel_scaler {
+            compatible = "zmk,input-behavior-scaler";
+            #binding-cells = <2>;
+            evt-type = <INPUT_EV_REL>;
+            input-code = <INPUT_REL_WHEEL>;
+    };
+};
+
+/ {
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer_numbers {
+                if-layers = <NAV SYMB>;
+                then-layer = <NUM>;
+        };
+        tri_layer_unicode_nav {
+                if-layers = <NAV FN>;
+                then-layer = <UNI_NAV>;
+        };
+        tri_layer_unicode_math {
+                if-layers = <NAV SYMB FN>;
+                then-layer = <UNI_MATH>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+        combo_mclk{
+            timeout-ms = <75>;
+            key-positions = <36 37>; // LCLK + RCLK = MCLK
+            bindings = <&mkp MCLK>;
+        };
+    };
+
+    behaviors {
+        mltp: media_layer_tap_preferred {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <300>;
+            // quick-tap-ms enables repeated CTRL-Z by holding CTRL and double
+            // tapping and holding Z.
+            quick-tap-ms = <200>;
+            bindings = <&mo>, <&kp>;
+        };
+
+        tdte: tap_dance_tab_esc {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp TAB>, <&kp ESC>;
+        };
+
+        tdtl: tap_dance_to_layer {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <1000>;
+            bindings = <&to DEFAULT>, <&to GAME>, <&to ARROWS>;
+        };
+
+        // From docs (https://zmk.dev/docs/behaviors/hold-tap#example-use-cases)
+        lh_pht: left_hand_positional_hold_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <150>;                        // <---[[produces tap if held longer than tapping-term-ms]]
+            // Retro tap fixes this issue:
+            // 1. Press one home row mod
+            // 2. Press a second home row mod
+            // 3. Wait a bit (slow typing)
+            // 4. Release second home row mod
+            // Expected: First home row mod hold behavior applied to second home row mod tap behavior
+            // Actual: Nothing happens, because the second home row mod is held
+            //     long enough for hold behavior to be invoked, but no other key
+            //     (except for the first home row mod which was already pressed)
+            //     gets tapped. Retro tap foces the second home row mod to emit
+            //     tap behavior when it finally gets released.
+            retro-tap;
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <
+                6  7  8  9  10    // Y - P
+                18 19 20 21 22 23 // H - '
+                30 31 32 33 34 35 // N - Enter
+            >;    // <---[[right-hand keys]]
+        };
+
+        // From docs (https://zmk.dev/docs/behaviors/hold-tap#example-use-cases)
+        rh_pht: right_hand_positional_hold_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <150>;                        // <---[[produces tap if held longer than tapping-term-ms]]
+            // See retro-tap expalanation above
+            retro-tap;
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <
+                0  1  2  3  4  5  // Tab - T
+                   13 14 15 16 17 // A   - G
+                   25 26 27 28 29 // Z   - B
+            >;    // <---[[left hand keys]]
+        };
+
+        // Usage example: &lt_cw NAV 0
+        lt_cw: layer_tap_caps_word {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "tap-preferred";
+            bindings = <&mo>, <&caps_word>;
+        };
+
+        lt_mk: layer_tap_mo_kp {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            flavor = "tap-preferred";
+            quick-tap-ms = <200>;
+            bindings = <&mo>, <&kp>;
+        };
+    };
+
+    macros {
+        l_uni_le: linux_unicode_less_than_or_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N4 &kp RET>;
+        };
+
+        l_uni_ge: linux_unicode_greater_than_or_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N5 &kp RET>;
+        };
+
+        l_uni_qe: linux_unicode_questioned_equals {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N5 &kp F &kp RET>;
+        };
+
+        l_uni_re: linux_unicode_roughly_equals {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N4 &kp N8 &kp RET>;
+        };
+
+        l_uni_ne: linux_unicode_not_equals {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N0 &kp RET>;
+        };
+
+        l_uni_degree: linux_unicode_degree {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N0 &kp N0 &kp B &kp N0 &kp RET>;
+        };
+
+        l_uni_left: linux_unicode_left {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N1 &kp N9 &kp N0 &kp RET>;
+        };
+
+        l_uni_up: linux_unicode_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N1 &kp N9 &kp N1 &kp RET>;
+        };
+
+        l_uni_right: linux_unicode_right {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N1 &kp N9 &kp N2 &kp RET>;
+        };
+
+        l_uni_down: linux_unicode_down {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N1 &kp N9 &kp N3 &kp RET>;
+        };
+
+        l_uni_bidir: linux_unicode_bidirectional {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LC(LS(U)) &kp N2 &kp N1 &kp N9 &kp N4 &kp RET>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            display-name = "DEFAULT";
+            bindings = <
+&kp TAB    &kp Q         &kp W          &kp E      &kp R            &kp T       /*|*/ &kp Y     &kp U        &kp I      &kp O          &kp P    &kp BSPC
+&mo MOUSE  &kp A         &lh_pht LSFT S &lt SYMB D &lt NAV F        &lt MOUSE G /*|*/ &kp H     &kp J        &kp K      &rh_pht LSFT L &kp SEMI &lt MOUSE SQT
+&kp LSHFT  &mltp MEDIA Z &kp X          &kp C      &kp V            &kp B       /*|*/ &kp N     &kp M        &kp COMMA  &kp DOT        &kp FSLH &kp RET
+                                                   &mkp LCLK                    /*|*/           &mkp RCLK
+                         &none          &kp LGUI   &mt LALT K_CMENU &kp LCTRL   /*|*/ &kp SPACE &lt_cw NAV 0 &mo FN     &none
+            >;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
       };
 
-    number_layer {
-      display-name = "NUMBER";
-      bindings = <
-   __________NUM_L1__________                          __________NUM_R1__________
-   __________NUM_L2__________                          __________NUM_R2__________
-   __________NUM_L3__________                          __________NUM_R3__________
-                            &trans                    &trans
-   _________THUMB_NUM_L_______                         _________THUMB_NUM_R_______
-              >;
-      };
+        gaming_layer {
+            display-name = "GAMING";
+            bindings = <
+&tdte          &kp Q &kp W  &kp E     &kp R             &kp T     /*|*/ &kp Y     &kp U     &kp I     &kp O   &kp P    &kp BSPC
+&lt MEDIA LGUI &kp A &kp S  &kp D     &kp F             &kp G     /*|*/ &kp H     &kp J     &kp K     &kp L   &kp SEMI &kp SQT
+&kp LSHFT      &kp Z &kp X  &kp C     &kp V             &kp B     /*|*/ &kp N     &kp M     &kp COMMA &kp DOT &kp FSLH &kp RET
+                                      &trans                      /*|*/           &trans
+                     &none  &kp LCTRL &lt_mk G_NUM LALT &kp SPACE /*|*/ &kp SPACE &mo NAV   &mo FN    &none
+                           >;
+            };
 
-    symbol_layer {
-      display-name = "SYMBOL";
-      bindings = <
-   __________SYM_L1__________                          __________SYM_R1__________
-   __________SYM_L2__________                          __________SYM_R2__________
-   __________SYM_L3__________                          __________SYM_R3__________
-                            &trans                    &trans
-   _________THUMB_SYM_L_______                         _________THUMB_SYM_R_______
-              >;
-      };
+        navigation_layer {
+            display-name = "NAV";
+            bindings = <
+&none     &kp ESC &none    &none    &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP           &kp END           &kp DEL &kp BSPC
+&none     &none   &kp LSFT &trans   &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
+&kp LSHFT &none   &none    &none    &none    &none             /*|*/ &none     &none    &kp LC(LA(LEFT)) &kp LC(LA(RIGHT)) &none   &none
+                                    &trans                     /*|*/           &trans
+                  &none    &kp LGUI &kp LALT &kp LCTRL         /*|*/ &kp BSPC  &kp RET  &mo FN           &none
+            >;
+        };
 
-    navigation_layer {
-      display-name = "NAVIGATION";
-      bindings = <
-   __________NAV_L1__________                          __________NAV_R1__________
-   __________NAV_L2__________                          __________NAV_R2__________
-   __________NAV_L3__________                          __________NAV_R3__________
-                            &trans                    &trans
-   _________THUMB_NAV_L_______                         _________THUMB_NAV_R_______
-              >;
-      };
+        symbols_layer {
+            display-name = "SYM";
+            bindings = <
+&none     &none &none     &none    &none    &none     /*|*/ &kp GRAVE &kp LBKT &kp EXCL  &kp RBKT &kp STAR &none
+&none     &none &kp LSHFT &none    &trans   &none     /*|*/ &kp AMPS  &kp LPAR &kp MINUS &kp RPAR &kp DLLR &kp CARET
+&kp LSHFT &none &none     &none    &none    &none     /*|*/ &kp PRCNT &kp AT   &kp EQUAL &kp HASH &kp BSLH &none
+                                   &trans             /*|*/           &trans
+                &none     &kp LGUI &kp LALT &kp LCTRL /*|*/ &none     &none    &mo FN    &none
+            >;
+        };
 
-    settings_layer {
-      display-name = "SETTINGS";
-      bindings = <
-   __________SET_L1__________                          __________SET_R1__________
-   __________SET_L2__________                          __________SET_R2__________
-   __________SET_L3__________                          __________SET_R3__________
-                            &trans                    &trans
-   _________THUMB_SET_L_______                         _________THUMB_SET_R_______
-              >;
-      };
+            numbers_layer {
+                display-name = "NUM";
+                bindings = <
+&none     &none &none     &none    &none    &none     /*|*/ &none   &kp N7 &kp N8 &kp N9 &kp STAR &none
+&none     &none &kp LSHFT &none    &none    &none     /*|*/ &none   &kp N4 &kp N5 &kp N6 &none    &none
+&kp LSHFT &none &none     &none    &none    &none     /*|*/ &kp DOT &kp N1 &kp N2 &kp N3 &kp FSLH &none
+                                   &trans             /*|*/         &trans
+                &none     &kp LGUI &kp LALT &kp LCTRL /*|*/ &kp N0  &none  &mo FN &none
+                >;
+            };
 
+            media_layer {
+                display-name = "MEDIA";
+                bindings = <
+&kp ESC &none &kp C_PREV &kp C_PP &kp C_NEXT &kp C_VOL_UP /*|*/ &none &none  &none &none &none &none
+&none   &none &none      &none    &none      &kp C_MUTE   /*|*/ &none &none  &none &none &none &none
+&none   &none &none      &none    &none      &kp C_VOL_DN /*|*/ &none &none  &none &none &none &none
+                                  &trans                  /*|*/       &trans
+              &none    &none      &none      &none        /*|*/ &none &none  &none &none
+                >;
+            };
+
+            arrows_layer {
+                display-name = "ARROWS";
+                bindings = <
+&kp ESC &none &none    &kp UP   &none     &kp C_VOL_UP /*|*/ &kp C_VOL_UP &none    &kp UP   &none     &none &none
+&none   &none &kp LEFT &kp DOWN &kp RIGHT &kp C_MUTE   /*|*/ &kp C_MUTE   &kp LEFT &kp DOWN &kp RIGHT &none &none
+&none   &none &none    &none    &none     &kp C_VOL_DN /*|*/ &kp C_VOL_DN &none    &none    &none     &none &none
+                                &trans                 /*|*/              &trans
+              &none    &none    &none     &kp SPACE    /*|*/ &kp SPACE    &none    &mo FN   &none
+                >;
+            };
+
+            function_layer {
+                display-name = "FUN";
+                bindings = <
+&kp PSCRN       &none &bt BT_PRV   &bt BT_CLR   &bt BT_NXT   &bt BT_SEL 0 /*|*/ &kp F12 &kp F7  &kp F8 &kp F9 &none &kp C_SLEEP
+&bootloader     &none &kp LSHFT    &mo SYMB     &mo NAV      &bt BT_SEL 1 /*|*/ &kp F11 &kp F4  &kp F5 &kp F6 &none &bootloader
+&kp LSHFT       &none &out OUT_USB &out OUT_BLE &bt BT_SEL 3 &bt BT_SEL 2 /*|*/ &kp F10 &kp F1  &kp F2 &kp F3 &none &tdtl
+                                                &trans                    /*|*/         &trans
+                      &none        &kp LGUI     &kp LALT     &kp LCTRL    /*|*/ &none   &none   &none  &none
+                >;
+            };
+
+            unicode_nav_layer {
+                display-name = "UNI";
+                bindings = <
+&none &none &none &none    &none &none  /*|*/ &none  &none       &l_uni_up    &none        &none &none
+&none &none &none &mo SYMB &none &none  /*|*/ &none  &l_uni_left &l_uni_down  &l_uni_right &none &none
+&none &none &none &none    &none &none  /*|*/ &none  &none       &l_uni_bidir &none        &none &none
+                           &trans       /*|*/        &trans
+            &none &none    &none &none  /*|*/ &none  &none &none &none
+                >;
+            };
+
+            unicode_math_layer {
+                display-name = "MATH";
+                    bindings = <
+&none &none &none &none &none  &none  /*|*/ &none         &none   &l_uni_ne &none     &l_uni_degree &none
+&none &none &none &none &none  &none  /*|*/ &none         &none   &l_uni_re &none     &none         &none
+&none &none &none &none &none  &none  /*|*/ &none         &none   &l_uni_le &l_uni_ge &l_uni_qe     &none
+                        &trans        /*|*/               &trans
+            &none &none &none  &none  /*|*/ &l_uni_degree &none   &none     &none
+                  >;
+            };
+
+            game_number_layer {
+                display-name = "G_NUM";
+                bindings = <
+&kp ESC &kp N1 &none &kp N2 &kp N3 &kp N6 /*|*/ &none  &none  &none &none &none &none
+&none   &none  &none &none  &kp N4 &kp N7 /*|*/ &none  &none  &none &none &none &none
+&none   &none  &none &none  &kp N5 &kp N8 /*|*/ &none  &none  &none &none &none &none
+                            &trans        /*|*/        &trans
+               &none  &none &none  &none  /*|*/ &none  &none  &none &none
+               >;
+            };
+
+            mouse_layer {
+                display-name = "MOUSE";
+                bindings = <
+&none &none &none    &none    &none     &none     /*|*/ &msc MOVE_DOWN &msc MOVE_LEFT &mmv MOVE_UP   &msc MOVE_RIGHT &none &ext_power EP_OFF
+&none &none &kp LSFT &none    &none     &none     /*|*/ &msc MOVE_UP   &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &none &none
+&none &none &none    &none    &none     &none     /*|*/ &none          &none          &none          &none           &none &ext_power EP_ON
+                              &trans              /*|*/                &trans
+            &none    &kp LGUI &kp LALT  &kp LCTRL /*|*/ &mkp LCLK      &mkp MCLK      &mkp RCLK      &none
+                 >;
+            };
    };  
 };
