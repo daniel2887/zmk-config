@@ -36,6 +36,7 @@
 };
 
 / {
+#if 0
 	/* assign `input-listener` to all pointing devices */
 	/* &glidepoint0 on central, &glidepoint1 on peripheral */
     tpad_central_listener {
@@ -46,11 +47,12 @@
         // xy-swap;
         // x-invert;
 	};
+#endif
 
     tpad_peripheral_listener {
         compatible = "zmk,input-behavior-listener";
         device = <&glidepoint1>;
-        layers = <DEFAULT GAME NAV SYMB NUM MEDIA ARROWS FN UNI_NAV UNI_MATH G_NUM MOUSE>;
+        layers = <DEFAULT GAME MEDIA ARROWS FN UNI_NAV UNI_MATH G_NUM MOUSE>;
         y-invert;
         scale-multiplier = <2>;
         /* NOTE: do NOT override event code here, */
@@ -60,7 +62,33 @@
         // y-input-code = <INPUT_REL_Y>;
     };
 
+    // Higher Cirque sensitvity when the NAV layer is active
+    tpad_peripheral_listener_high_sens {
+        compatible = "zmk,input-behavior-listener";
+        device = <&glidepoint1>;
+        // Higher movement sensitivity when 'f' (NAV) is held
+        layers = <NAV>;
+        y-invert;
+        scale-multiplier = <5>;
+    };
+
+    // Cirque for scrolling when the SYMB layer is active
     tpad_peripheral_scroll {
+        compatible = "zmk,input-behavior-listener";
+        device = <&glidepoint1>;
+        layers = <SYMB>;
+        /* NOTE: only apply input-code overriding for INPUT_EV_REL */
+        evt-type = <INPUT_EV_REL>;
+        x-input-code = <INPUT_REL_HWHEEL>;
+        y-input-code = <INPUT_REL_WHEEL>;
+        bindings = <&ib_wheel_scaler 1 8>;
+        // Slow down scrolling by 3/4
+        scale-multiplier = <3>;
+        scale-divisor = <4>;
+    };
+
+    // Higher Cirque sensitvity when the NAV layer is active
+    tpad_peripheral_scroll_high_sens {
         compatible = "zmk,input-behavior-listener";
         device = <&glidepoint1>;
         layers = <NUM>;
@@ -69,6 +97,9 @@
         x-input-code = <INPUT_REL_HWHEEL>;
         y-input-code = <INPUT_REL_WHEEL>;
         bindings = <&ib_wheel_scaler 1 8>;
+        // Scaling factor of x2.5
+        scale-multiplier = <5>;
+        scale-divisor = <2>;
     };
 
     ib_wheel_scaler: ib_wheel_scaler {
@@ -288,11 +319,11 @@
         default_layer {
             display-name = "DEFAULT";
             bindings = <
-&kp TAB    &kp Q         &kp W          &kp E      &kp R            &kp T       /*|*/ &kp Y     &kp U        &kp I      &kp O          &kp P    &kp BSPC
-&mo MOUSE  &kp A         &lh_pht LSFT S &lt SYMB D &lt NAV F        &lt MOUSE G /*|*/ &kp H     &kp J        &kp K      &rh_pht LSFT L &kp SEMI &lt MOUSE SQT
-&kp LSHFT  &mltp MEDIA Z &kp X          &kp C      &kp V            &kp B       /*|*/ &kp N     &kp M        &kp COMMA  &kp DOT        &kp FSLH &kp RET
-                                                   &mkp LCLK                    /*|*/           &mkp RCLK
-                         &none          &kp LGUI   &mt LALT K_CMENU &kp LCTRL   /*|*/ &kp SPACE &lt_cw NAV 0 &mo FN     &none
+&kp TAB    &kp Q         &kp W          &kp E        &kp R      &kp T       /*|*/ &kp Y     &kp U        &kp I        &kp O          &kp P    &kp BSPC
+&mo MOUSE  &kp A         &lh_pht LSFT S &lt SYMB D   &lt NAV F  &lt MOUSE G /*|*/ &kp H     &kp J        &kp K        &rh_pht LSFT L &kp SEMI &lt MOUSE SQT
+&kp LSHFT  &mltp MEDIA Z &kp X          &kp C        &kp V      &kp B       /*|*/ &kp N     &kp M        &kp COMMA    &kp DOT        &kp FSLH &kp RET
+                                                     &mkp LCLK              /*|*/           &mkp RCLK
+                         &kp LGUI   &mt LALT K_CMENU &kp LCTRL  &none       /*|*/ &none     &kp SPACE    &lt_cw NAV 0 &mo FN
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
       };
@@ -300,44 +331,44 @@
         gaming_layer {
             display-name = "GAMING";
             bindings = <
-&tdte          &kp Q &kp W  &kp E     &kp R             &kp T     /*|*/ &kp Y     &kp U     &kp I     &kp O   &kp P    &kp BSPC
-&lt MEDIA LGUI &kp A &kp S  &kp D     &kp F             &kp G     /*|*/ &kp H     &kp J     &kp K     &kp L   &kp SEMI &kp SQT
-&kp LSHFT      &kp Z &kp X  &kp C     &kp V             &kp B     /*|*/ &kp N     &kp M     &kp COMMA &kp DOT &kp FSLH &kp RET
-                                      &trans                      /*|*/           &trans
-                     &none  &kp LCTRL &lt_mk G_NUM LALT &kp SPACE /*|*/ &kp SPACE &mo NAV   &mo FN    &none
+&tdte          &kp Q &kp W     &kp E             &kp R     &kp T /*|*/ &kp Y     &kp U     &kp I     &kp O   &kp P    &kp BSPC
+&lt MEDIA LGUI &kp A &kp S     &kp D             &kp F     &kp G /*|*/ &kp H     &kp J     &kp K     &kp L   &kp SEMI &kp SQT
+&kp LSHFT      &kp Z &kp X     &kp C             &kp V     &kp B /*|*/ &kp N     &kp M     &kp COMMA &kp DOT &kp FSLH &kp RET
+                                                 &trans          /*|*/           &trans
+                     &kp LCTRL &lt_mk G_NUM LALT &kp SPACE &none /*|*/ &kp SPACE &mo NAV   &mo FN    &none
                            >;
             };
 
         navigation_layer {
             display-name = "NAV";
             bindings = <
-&none     &kp ESC &none    &none    &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP           &kp END           &kp DEL &kp BSPC
-&none     &none   &kp LSFT &trans   &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
-&kp LSHFT &none   &none    &none    &none    &none             /*|*/ &none     &none    &kp LC(LA(LEFT)) &kp LC(LA(RIGHT)) &none   &none
-                                    &trans                     /*|*/           &trans
-                  &none    &kp LGUI &kp LALT &kp LCTRL         /*|*/ &kp BSPC  &kp RET  &mo FN           &none
+&none     &kp ESC &none    &none    &none     &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME  &kp UP           &kp END           &kp DEL &kp BSPC
+&none     &none   &kp LSFT &trans   &none     &none             /*|*/ &kp PG_DN &kp LEFT  &kp DOWN         &kp RIGHT         &none   &none
+&kp LSHFT &none   &none    &none    &none     &none             /*|*/ &none     &none     &kp LC(LA(LEFT)) &kp LC(LA(RIGHT)) &none   &none
+                                    &trans                      /*|*/           &trans
+                  &kp LGUI &kp LALT &kp LCTRL &none             /*|*/ &none     &kp BSPC  &kp RET          &mo FN
             >;
         };
 
         symbols_layer {
             display-name = "SYM";
             bindings = <
-&none     &none &none     &none    &none    &none     /*|*/ &kp GRAVE &kp LBKT &kp EXCL  &kp RBKT &kp STAR &none
-&none     &none &kp LSHFT &none    &trans   &none     /*|*/ &kp AMPS  &kp LPAR &kp MINUS &kp RPAR &kp DLLR &kp CARET
-&kp LSHFT &none &none     &none    &none    &none     /*|*/ &kp PRCNT &kp AT   &kp EQUAL &kp HASH &kp BSLH &none
-                                   &trans             /*|*/           &trans
-                &none     &kp LGUI &kp LALT &kp LCTRL /*|*/ &none     &none    &mo FN    &none
+&none     &none &none     &none    &none    &none /*|*/ &kp GRAVE &kp LBKT &kp EXCL  &kp RBKT &kp STAR &none
+&none     &none &kp LSHFT &none    &trans   &none /*|*/ &kp AMPS  &kp LPAR &kp MINUS &kp RPAR &kp DLLR &kp CARET
+&kp LSHFT &none &none     &none    &none    &none /*|*/ &kp PRCNT &kp AT   &kp EQUAL &kp HASH &kp BSLH &none
+                                   &trans         /*|*/           &trans
+                &kp LGUI &kp LALT &kp LCTRL &none /*|*/ &none     &none    &mo FN    &none
             >;
         };
 
             numbers_layer {
                 display-name = "NUM";
                 bindings = <
-&none     &none &none     &none    &none    &none     /*|*/ &none   &kp N7 &kp N8 &kp N9 &kp STAR &none
-&none     &none &kp LSHFT &none    &none    &none     /*|*/ &none   &kp N4 &kp N5 &kp N6 &none    &none
-&kp LSHFT &none &none     &none    &none    &none     /*|*/ &kp DOT &kp N1 &kp N2 &kp N3 &kp FSLH &none
-                                   &trans             /*|*/         &trans
-                &none     &kp LGUI &kp LALT &kp LCTRL /*|*/ &kp N0  &none  &mo FN &none
+&none     &none &none     &none    &none     &none /*|*/ &none   &kp N7 &kp N8 &kp N9 &kp STAR &none
+&none     &none &kp LSHFT &none    &none     &none /*|*/ &none   &kp N4 &kp N5 &kp N6 &none    &none
+&kp LSHFT &none &none     &none    &none     &none /*|*/ &kp DOT &kp N1 &kp N2 &kp N3 &kp FSLH &none
+                                   &trans          /*|*/         &trans
+                &kp LGUI &kp LALT  &kp LCTRL &none /*|*/ &none   &kp N0  &none &mo FN
                 >;
             };
 
@@ -355,22 +386,22 @@
             arrows_layer {
                 display-name = "ARROWS";
                 bindings = <
-&kp ESC &none &none    &kp UP   &none     &kp C_VOL_UP /*|*/ &kp C_VOL_UP &none    &kp UP   &none     &none &none
-&none   &none &kp LEFT &kp DOWN &kp RIGHT &kp C_MUTE   /*|*/ &kp C_MUTE   &kp LEFT &kp DOWN &kp RIGHT &none &none
-&none   &none &none    &none    &none     &kp C_VOL_DN /*|*/ &kp C_VOL_DN &none    &none    &none     &none &none
+&kp ESC &none &none    &kp UP   &none     &kp C_VOL_UP /*|*/ &kp C_VOL_UP &none     &kp UP   &none     &none &none
+&none   &none &kp LEFT &kp DOWN &kp RIGHT &kp C_MUTE   /*|*/ &kp C_MUTE   &kp LEFT  &kp DOWN &kp RIGHT &none &none
+&none   &none &none    &none    &none     &kp C_VOL_DN /*|*/ &kp C_VOL_DN &none     &none    &none     &none &none
                                 &trans                 /*|*/              &trans
-              &none    &none    &none     &kp SPACE    /*|*/ &kp SPACE    &none    &mo FN   &none
+              &none    &none    &kp SPACE &none        /*|*/ &none        &kp SPACE &none    &mo FN
                 >;
             };
 
             function_layer {
                 display-name = "FUN";
                 bindings = <
-&kp PSCRN       &none &bt BT_PRV   &bt BT_CLR   &bt BT_NXT   &bt BT_SEL 0 /*|*/ &kp F12 &kp F7  &kp F8 &kp F9 &none &kp C_SLEEP
-&bootloader     &none &kp LSHFT    &mo SYMB     &mo NAV      &bt BT_SEL 1 /*|*/ &kp F11 &kp F4  &kp F5 &kp F6 &none &bootloader
-&kp LSHFT       &none &out OUT_USB &out OUT_BLE &bt BT_SEL 3 &bt BT_SEL 2 /*|*/ &kp F10 &kp F1  &kp F2 &kp F3 &none &tdtl
-                                                &trans                    /*|*/         &trans
-                      &none        &kp LGUI     &kp LALT     &kp LCTRL    /*|*/ &none   &none   &none  &none
+&kp PSCRN       &none &bt BT_PRV   &bt BT_CLR   &bt BT_NXT   &bt BT_SEL 0 /*|*/ &kp F12 &kp F7    &kp F8 &kp F9 &none &kp C_SLEEP
+&bootloader     &none &kp LSHFT    &mo SYMB     &mo NAV      &bt BT_SEL 1 /*|*/ &kp F11 &kp F4    &kp F5 &kp F6 &none &bootloader
+&kp LSHFT       &none &out OUT_USB &out OUT_BLE &bt BT_SEL 3 &bt BT_SEL 2 /*|*/ &kp F10 &kp F1    &kp F2 &kp F3 &none &tdtl
+                                                &none                     /*|*/         &soft_off
+                      &kp LGUI     &kp LALT     &kp LCTRL    &none        /*|*/ &none   &none     &none  &none
                 >;
             };
 
@@ -388,11 +419,11 @@
             unicode_math_layer {
                 display-name = "MATH";
                     bindings = <
-&none &none &none &none &none  &none  /*|*/ &none         &none   &l_uni_ne &none     &l_uni_degree &none
-&none &none &none &none &none  &none  /*|*/ &none         &none   &l_uni_re &none     &none         &none
-&none &none &none &none &none  &none  /*|*/ &none         &none   &l_uni_le &l_uni_ge &l_uni_qe     &none
-                        &trans        /*|*/               &trans
-            &none &none &none  &none  /*|*/ &l_uni_degree &none   &none     &none
+&none &none &none &none &none  &none  /*|*/ &none &none         &l_uni_ne &none     &l_uni_degree &none
+&none &none &none &none &none  &none  /*|*/ &none &none         &l_uni_re &none     &none         &none
+&none &none &none &none &none  &none  /*|*/ &none &none         &l_uni_le &l_uni_ge &l_uni_qe     &none
+                        &trans        /*|*/       &trans
+            &none &none &none  &none  /*|*/ &none &l_uni_degree &none   &none
                   >;
             };
 
@@ -410,11 +441,11 @@
             mouse_layer {
                 display-name = "MOUSE";
                 bindings = <
-&none &none &none    &none    &none     &none     /*|*/ &msc MOVE_DOWN &msc MOVE_LEFT &mmv MOVE_UP   &msc MOVE_RIGHT &none &ext_power EP_OFF
-&none &none &kp LSFT &none    &none     &none     /*|*/ &msc MOVE_UP   &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &none &none
-&none &none &none    &none    &none     &none     /*|*/ &none          &none          &none          &none           &none &ext_power EP_ON
-                              &trans              /*|*/                &trans
-            &none    &kp LGUI &kp LALT  &kp LCTRL /*|*/ &mkp LCLK      &mkp MCLK      &mkp RCLK      &none
+&none &none &none    &none     &none     &none /*|*/ &msc MOVE_DOWN &msc MOVE_LEFT &mmv MOVE_UP   &msc MOVE_RIGHT &none &ext_power EP_OFF
+&none &none &kp LSFT &none     &none     &none /*|*/ &msc MOVE_UP   &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &none &none
+&none &none &none    &none     &none     &none /*|*/ &none          &none          &none          &none           &none &ext_power EP_ON
+                               &trans          /*|*/                &trans
+            &kp LGUI &kp LALT  &kp LCTRL &none /*|*/ &none          &mkp LCLK      &mkp MCLK      &mkp RCLK
                  >;
             };
    };  
