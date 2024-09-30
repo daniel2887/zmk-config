@@ -2,10 +2,16 @@ manifest:
   remotes:
     - name: zmk_ds87
       url-base: https://github.com/daniel2887
+    - name: petejohanson
+      url-base: https://github.com/petejohanson
   projects:
     - name: zmk
       remote: zmk_ds87
       revision: ds87-hillsideview-cirque
       import: app/west.yml
+    - name: cirque-input-module 
+      remote: petejohanson
+      revision: main
+    
   self:
     path: config
