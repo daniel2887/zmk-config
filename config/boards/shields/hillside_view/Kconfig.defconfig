@@ -1,7 +1,7 @@
 # Copyright (c) 2022 The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
-if SHIELD_HILLSIDE_VIEW_LEFT
+if SHIELD_HILLSIDE_VIEW_RIGHT
 
 config ZMK_KEYBOARD_NAME
     default "Hillside View"
