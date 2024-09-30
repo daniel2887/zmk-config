@@ -174,7 +174,7 @@ RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5)                                       RC
         sensitivity = "1x";
         // sleep; // sleep = ~5uA, active = ~3.2mA. Sleep causes an annoying delay during sleep exit.
         // no-taps;
-        no-scrolling;
+        // no-scrolling;
     };
 
 };
