@@ -5,7 +5,7 @@ manifest:
   projects:
     - name: zmk
       remote: zmk_ds87
-      revision: ds87-mouse-pim447
+      revision: ds87-hillsideview-cirque
       import: app/west.yml
   self:
     path: config
