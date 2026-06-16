@@ -98,6 +98,14 @@
             bindings = <&to DEFAULT>, <&to GAME>, <&to ARROWS>;
         };
 
+        ht_mac: hold_tap_mac {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+
         // From docs (https://zmk.dev/docs/behaviors/hold-tap#example-use-cases)
         lh_pht: left_hand_positional_hold_tap {
             compatible = "zmk,behavior-hold-tap";
@@ -307,7 +315,7 @@
 &kp TAB   &kp Q         &kp W          &kp E      &kp R            &kp T        /*|*/ &kp Y     &kp U        &kp I     &kp O          &kp P    &kp BSPC
 &kp GLOBE &kp A         &lh_pht LSFT S &lt SYMB D &lt NAV F        &lt MOUSE G  /*|*/ &kp H     &kp J        &kp K     &rh_pht LSFT L &kp SEMI &lt MOUSE SQT
 &kp LSHFT &mltp MEDIA Z &kp X          &kp C      &kp V            &kp B        /*|*/ &kp N     &kp M        &kp COMMA &kp DOT        &kp FSLH &kp RET
-                                       &kp LCTRL  &mt LALT LC(RET) &kp LGUI     /*|*/ &kp SPACE &lt_cw NAV 0 &mo FN
+                                       &ht_mac LCTRL LC(UP) &ht_mac LALT LC(DOWN) &kp LGUI     /*|*/ &kp SPACE &lt_cw NAV 0 &mo FN
                                >;
             };
 
@@ -324,8 +332,8 @@
                     bindings = <
 &none     &kp ESC &none    &none    &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP           &kp END           &kp DEL &kp BSPC
 &trans    &none   &kp LSFT &trans   &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
-&kp LSHFT &none   &none    &none    &none    &none             /*|*/ &none     &none    &kp LC(LEFT)     &kp LC(RIGHT)     &none   &none
-                           &trans   &trans   &trans            /*|*/ &kp BSPC  &kp RET  &mo FN
+&kp LSHFT &none   &none    &none    &none    &none             /*|*/ &none     &none    &kp LC(LS(LEFT)) &kp LC(LS(RIGHT)) &none   &none
+                           &trans   &trans   &trans            /*|*/ &kp BSPC  &none    &mo FN
                         >;
             };
 
