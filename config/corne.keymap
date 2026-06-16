@@ -14,17 +14,18 @@
 
 // TODO: try to move these to a zmk-config corne.dtsi so that I can use these in layer definition for PIM447
 #define DEFAULT 0
-#define GAME 1
-#define NAV 2
-#define SYMB 3
-#define NUM 4
-#define MEDIA 5
-#define ARROWS 6
-#define FN 7
-#define UNI_NAV 8 // navigation-like unicode characters (e.g., arrows)
-#define UNI_MATH 9 // math related unicode characters (e.g., approximately equals)
-#define G_NUM 10   // Numbers (1-5) accessible from the GAME layer
-#define MOUSE 11
+#define DEFAULT_MAC 1
+#define GAME 2
+#define NAV 3
+#define SYMB 4
+#define NUM 5
+#define MEDIA 6
+#define ARROWS 7
+#define FN 8
+#define UNI_NAV 9 // navigation-like unicode characters (e.g., arrows)
+#define UNI_MATH 10 // math related unicode characters (e.g., approximately equals)
+#define G_NUM 11   // Numbers (1-5) accessible from the GAME layer
+#define MOUSE 12
 
 #ifdef CONFIG_ZMK_TRACKBALL_PIM447
     #define PIM447_SCROLL_MOVE pim447_scroll_move
@@ -169,92 +170,124 @@
     };
 
     macros {
-        l_uni_le: linux_unicode_less_than_or_equal {
+        bt_mac: bt_mac {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N4 &kp RET>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&bt BT_SEL 1 &to DEFAULT_MAC>;
         };
 
-        l_uni_ge: linux_unicode_greater_than_or_equal {
+        bt_win0: bt_win0 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N5 &kp RET>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&bt BT_SEL 0 &to DEFAULT>;
         };
 
-        l_uni_qe: linux_unicode_questioned_equals {
+        bt_win2: bt_win2 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N5 &kp F &kp RET>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&bt BT_SEL 2 &to DEFAULT>;
         };
 
-        l_uni_re: linux_unicode_roughly_equals {
+        bt_win3: bt_win3 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N4 &kp N8 &kp RET>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&bt BT_SEL 3 &to DEFAULT>;
         };
 
-        l_uni_ne: linux_unicode_not_equals {
+        m_uni_le: mac_unicode_less_than_or_equal {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N2 &kp N2 &kp N6 &kp N0 &kp RET>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N2 &kp N2 &kp N6 &kp N4>, <&macro_release &kp LALT>;
         };
 
-        l_uni_degree: linux_unicode_degree {
+        m_uni_ge: mac_unicode_greater_than_or_equal {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N0 &kp N0 &kp B &kp N0 &kp RET>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N2 &kp N2 &kp N6 &kp N5>, <&macro_release &kp LALT>;
         };
 
-        l_uni_left: linux_unicode_left {
+        m_uni_qe: mac_unicode_questioned_equals {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N2 &kp N1 &kp N9 &kp N0 &kp RET>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N2 &kp N2 &kp N5 &kp F>, <&macro_release &kp LALT>;
         };
 
-        l_uni_up: linux_unicode_up {
+        m_uni_re: mac_unicode_roughly_equals {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N2 &kp N1 &kp N9 &kp N1 &kp RET>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N2 &kp N2 &kp N4 &kp N8>, <&macro_release &kp LALT>;
         };
 
-        l_uni_right: linux_unicode_right {
+        m_uni_ne: mac_unicode_not_equals {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N2 &kp N1 &kp N9 &kp N2 &kp RET>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N2 &kp N2 &kp N6 &kp N0>, <&macro_release &kp LALT>;
         };
 
-        l_uni_down: linux_unicode_down {
+        m_uni_degree: mac_unicode_degree {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N2 &kp N1 &kp N9 &kp N3 &kp RET>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N0 &kp N0 &kp B &kp N0>, <&macro_release &kp LALT>;
         };
 
-        l_uni_bidir: linux_unicode_bidirectional {
+        m_uni_left: mac_unicode_left {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp LC(LS(U)) &kp N2 &kp N1 &kp N9 &kp N4 &kp RET>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N2 &kp N1 &kp N9 &kp N0>, <&macro_release &kp LALT>;
+        };
+
+        m_uni_up: mac_unicode_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N2 &kp N1 &kp N9 &kp N1>, <&macro_release &kp LALT>;
+        };
+
+        m_uni_right: mac_unicode_right {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N2 &kp N1 &kp N9 &kp N2>, <&macro_release &kp LALT>;
+        };
+
+        m_uni_down: mac_unicode_down {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N2 &kp N1 &kp N9 &kp N3>, <&macro_release &kp LALT>;
+        };
+
+        m_uni_bidir: mac_unicode_bidirectional {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&macro_press &kp LALT>, <&macro_tap &kp N2 &kp N1 &kp N9 &kp N4>, <&macro_release &kp LALT>;
         };
     };
 
@@ -266,6 +299,15 @@
 &mo MOUSE  &kp A         &lh_pht LSFT S &lt SYMB D &lt NAV F        &lt MOUSE G  /*|*/ &kp H     &kp J        &kp K     &rh_pht LSFT L &kp SEMI &lt MOUSE SQT
 &kp LSHFT  &mltp MEDIA Z &kp X          &kp C      &kp V            &kp B        /*|*/ &kp N     &kp M        &kp COMMA &kp DOT        &kp FSLH &kp RET
                                         &kp LGUI   &mt LALT K_CMENU &kp LCTRL    /*|*/ &kp SPACE &lt_cw NAV 0 &mo FN
+                               >;
+            };
+
+            default_mac_layer {
+                    bindings = <
+&kp TAB   &kp Q         &kp W          &kp E      &kp R            &kp T        /*|*/ &kp Y     &kp U        &kp I     &kp O          &kp P    &kp BSPC
+&kp GLOBE &kp A         &lh_pht LSFT S &lt SYMB D &lt NAV F        &lt MOUSE G  /*|*/ &kp H     &kp J        &kp K     &rh_pht LSFT L &kp SEMI &lt MOUSE SQT
+&kp LSHFT &mltp MEDIA Z &kp X          &kp C      &kp V            &kp B        /*|*/ &kp N     &kp M        &kp COMMA &kp DOT        &kp FSLH &kp RET
+                                       &kp LCTRL  &mt LALT LC(RET) &kp LGUI     /*|*/ &kp SPACE &lt_cw NAV 0 &mo FN
                                >;
             };
 
@@ -281,9 +323,9 @@
             navigation_layer {
                     bindings = <
 &none     &kp ESC &none    &none    &none    &kp LC(LA(LS(T))) /*|*/ &kp PG_UP &kp HOME &kp UP           &kp END           &kp DEL &kp BSPC
-&none     &none   &kp LSFT &trans   &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
-&kp LSHFT &none   &none    &none    &none    &none             /*|*/ &none     &none    &kp LC(LA(LEFT)) &kp LC(LA(RIGHT)) &none   &none
-                           &kp LGUI &kp LALT &kp LCTRL         /*|*/ &kp BSPC  &kp RET  &mo FN
+&trans    &none   &kp LSFT &trans   &none    &none             /*|*/ &kp PG_DN &kp LEFT &kp DOWN         &kp RIGHT         &none   &none
+&kp LSHFT &none   &none    &none    &none    &none             /*|*/ &none     &none    &kp LC(LEFT)     &kp LC(RIGHT)     &none   &none
+                           &trans   &trans   &trans            /*|*/ &kp BSPC  &kp RET  &mo FN
                         >;
             };
 
@@ -292,7 +334,7 @@
 &none     &none &none     &none    &none    &none       /*|*/ &kp GRAVE &kp LBKT &kp EXCL  &kp RBKT &kp STAR &none
 &none     &none &kp LSHFT &none    &trans   &none       /*|*/ &kp AMPS  &kp LPAR &kp MINUS &kp RPAR &kp DLLR &kp CARET
 &kp LSHFT &none &none     &none    &none    &none       /*|*/ &kp PRCNT &kp AT   &kp EQUAL &kp HASH &kp BSLH &none
-                          &kp LGUI &kp LALT &kp LCTRL   /*|*/ &none     &none    &mo FN
+                          &trans   &trans   &trans      /*|*/ &none     &none    &mo FN
                                       >;
             };
 
@@ -301,7 +343,7 @@
 &none     &none &none     &none    &none    &none     /*|*/ &none   &kp N7 &kp N8 &kp N9 &kp STAR &none
 &none     &none &kp LSHFT &none    &none    &none     /*|*/ &none   &kp N4 &kp N5 &kp N6 &none    &none
 &kp LSHFT &none &none     &none    &none    &none     /*|*/ &kp DOT &kp N1 &kp N2 &kp N3 &kp FSLH &none
-                          &kp LGUI &kp LALT &kp LCTRL /*|*/ &kp N0  &none  &mo FN
+                          &trans   &trans   &trans    /*|*/ &kp N0  &none  &mo FN
                       >;
             };
 
@@ -325,28 +367,28 @@
 
             function_layer {
                     bindings = <
-&kp PSCRN &none &bt BT_PRV   &bt BT_CLR   &bt BT_NXT   &bt BT_SEL 0 /*|*/ &kp F12 &kp F7 &kp F8 &kp F9 &none &kp C_SLEEP
-&none     &none &kp LSHFT    &mo SYMB     &mo NAV      &bt BT_SEL 1 /*|*/ &kp F11 &kp F4 &kp F5 &kp F6 &none &none
-&kp LSHFT &none &out OUT_USB &out OUT_BLE &bt BT_SEL 3 &bt BT_SEL 2 /*|*/ &kp F10 &kp F1 &kp F2 &kp F3 &none &tdtl
-                             &kp LGUI     &kp LALT     &kp LCTRL    /*|*/ &none   &none  &none
+&kp PSCRN   &none &bt BT_PRV   &bt BT_CLR   &bt BT_NXT        &bt_win0 /*BT0*/ /*|*/ &kp F12 &kp F7 &kp F8 &kp F9 &none &kp C_SLEEP
+&bootloader &none &kp LSHFT    &mo SYMB     &mo NAV           &bt_mac  /*BT1*/ /*|*/ &kp F11 &kp F4 &kp F5 &kp F6 &none &bootloader
+&kp LSHFT   &none &out OUT_USB &out OUT_BLE &bt_win3  /*BT3*/ &bt_win2 /*BT2*/ /*|*/ &kp F10 &kp F1 &kp F2 &kp F3 &none &tdtl
+                               &trans       &trans            &trans           /*|*/ &none   &none  &none
                              >;
             };
 
             unicode_nav_layer {
                     bindings = <
-&none &none &none &none    &none &none /*|*/ &none &none       &l_uni_up    &none        &none &none
-&none &none &none &mo SYMB &none &none /*|*/ &none &l_uni_left &l_uni_down  &l_uni_right &none &none
-&none &none &none &none    &none &none /*|*/ &none &none       &l_uni_bidir &none        &none &none
+&none &none &none &none    &none &none /*|*/ &none &none       &m_uni_up    &none        &none &none
+&none &none &none &mo SYMB &none &none /*|*/ &none &m_uni_left &m_uni_down  &m_uni_right &none &none
+&none &none &none &none    &none &none /*|*/ &none &none       &m_uni_bidir &none        &none &none
                   &none    &none &none /*|*/ &none &none       &none
                   >;
             };
 
             unicode_math_layer {
                     bindings = <
-&none &none &none &none &none &none /*|*/ &none &none   &l_uni_ne &none     &l_uni_degree &none
-&none &none &none &none &none &none /*|*/ &none &none   &l_uni_re &none     &none         &none
-&none &none &none &none &none &none /*|*/ &none &none   &l_uni_le &l_uni_ge &l_uni_qe     &none
-                  &none &none &none /*|*/ &l_uni_degree &none &none
+&none &none &none &none &none &none /*|*/ &none &none   &m_uni_ne &none     &m_uni_degree &none
+&none &none &none &none &none &none /*|*/ &none &none   &m_uni_re &none     &none         &none
+&none &none &none &none &none &none /*|*/ &none &none   &m_uni_le &m_uni_ge &m_uni_qe     &none
+                  &none &none &none /*|*/ &m_uni_degree &none &none
                   >;
             };
 
@@ -364,7 +406,7 @@
 &none &none &none    &none   &none               &none     /*|*/ &msc MOVE_DOWN &msc MOVE_LEFT &mmv MOVE_UP   &msc MOVE_RIGHT &none &ext_power EP_OFF
 &none &none &kp LSFT &none   &PIM447_SCROLL_MOVE &none     /*|*/ &msc MOVE_UP   &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &none &none
 &none &none &none    &none   &none               &none     /*|*/ &none          &none          &none          &none           &none &ext_power EP_ON
-                     &kp LGUI &kp LALT           &kp LCTRL /*|*/ &mkp LCLK      &mkp MCLK      &mkp RCLK
+                     &trans   &trans             &trans    /*|*/ &mkp LCLK      &mkp MCLK      &mkp RCLK
                      >;
             };
     };
